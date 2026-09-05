@@ -1,0 +1,79 @@
+{
+  "Metadata": {
+    "title": "まなびクイズ | 家族で楽しく学ぼう",
+    "description": "親子でつくったクイズに挑戦して、答えの理由まで楽しく身につけよう。"
+  },
+  "Nav": {
+    "brandName": "まなびクイズ",
+    "brandTagline": "家族で楽しく学ぼう",
+    "pastResults": "過去の結果",
+    "addQuiz": "クイズを追加",
+    "backToList": "クイズ一覧へ"
+  },
+  "HomePage": {
+    "heroLabel": "今日のまなび時間",
+    "heroTitleLine1": "知りたい気持ちを、",
+    "heroTitleLine2": "クイズにしよう。",
+    "heroDescription": "親子でつくった問題に挑戦して、答えの理由まで楽しく身につけよう。",
+    "startCta": "おすすめから始める",
+    "statusBadge": "学習中",
+    "quizCount": "{count}つのクイズ",
+    "pacingNote": "あなたのペースで進めよう",
+    "libraryLabel": "クイズライブラリ",
+    "libraryTitle": "挑戦するクイズ",
+    "addFromJson": "JSONから追加",
+    "deleteAria": "{title}を削除",
+    "questionCount": "{count}問",
+    "startQuiz": "クイズを始める"
+  },
+  "ImportPage": {
+    "audienceLabel": "保護者向け",
+    "title": "クイズを追加",
+    "description": "AIで作ったクイズJSONを貼り付けて、家族のクイズライブラリに保存します。必須項目や正解の指定もサーバーで確認します。",
+    "jsonLabel": "クイズJSON",
+    "saving": "確認中...",
+    "save": "保存する",
+    "clear": "クリア",
+    "errorsTitle": "入力を確認してください",
+    "successMessage": "保存しました。",
+    "viewList": "一覧を見る"
+  },
+  "ResultsPage": {
+    "title": "過去の結果",
+    "description": "保存したクイズに挑戦すると、ここに学習の記録が表示されます。",
+    "browseQuizzes": "クイズを探す"
+  },
+  "QuizSession": {
+    "completedLabel": "クイズ完了",
+    "scoreLabel": "スコア",
+    "scoreValue": "{score} / {maxScore}点",
+    "correctCountLabel": "正解数",
+    "correctCountValue": "{count}問",
+    "accuracyLabel": "正答率",
+    "accuracyValue": "{value}%",
+    "retry": "もう一度挑戦",
+    "backToListButton": "一覧に戻る",
+    "correctAria": "正解",
+    "incorrectAria": "不正解",
+    "yourAnswerAndCorrectAnswer": "あなたの答え：{selectedAnswer} / 正解：{correctAnswer}",
+    "questionCounter": "{current} / {total}問",
+    "correctFeedback": "正解です",
+    "incorrectFeedback": "もう一度確認しましょう",
+    "correctAnswerPrefix": "正解：{correctAnswer}",
+    "memoryTip": "覚え方：{tip}",
+    "nextQuestion": "次の問題へ",
+    "viewResults": "結果を見る"
+  },
+  "Validation": {
+    "required": "入力してください",
+    "choicesMin": "選択肢は2つ以上必要です",
+    "choicesDuplicate": "選択肢が重複しています",
+    "correctAnswerMustBeChoice": "正解は選択肢の中から指定してください",
+    "questionsMin": "問題を1問以上追加してください",
+    "jsonInvalid": "JSONの形式が正しくありません",
+    "unknownError": "クイズを確認できませんでした",
+    "saveFailed": "保存できませんでした。Neonの接続を確認してください。",
+    "sampleCannotDelete": "サンプル問題は削除できません",
+    "issueMessage": "{path}：{message}"
+  }
+}

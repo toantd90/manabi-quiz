@@ -1,0 +1,79 @@
+{
+  "Metadata": {
+    "title": "Manabi Quiz | Learn together as a family",
+    "description": "Take on quizzes made by parents and kids, and enjoy learning the reasons behind every answer."
+  },
+  "Nav": {
+    "brandName": "Manabi Quiz",
+    "brandTagline": "Learn together as a family",
+    "pastResults": "Past results",
+    "addQuiz": "Add a quiz",
+    "backToList": "Back to quiz list"
+  },
+  "HomePage": {
+    "heroLabel": "Today's learning time",
+    "heroTitleLine1": "Turn your curiosity",
+    "heroTitleLine2": "into a quiz.",
+    "heroDescription": "Take on questions made by parents and kids, and enjoy learning the reasons behind every answer.",
+    "startCta": "Start with a recommendation",
+    "statusBadge": "Learning",
+    "quizCount": "{count} quizzes",
+    "pacingNote": "Go at your own pace",
+    "libraryLabel": "Quiz library",
+    "libraryTitle": "Quizzes to try",
+    "addFromJson": "Add from JSON",
+    "deleteAria": "Delete {title}",
+    "questionCount": "{count} questions",
+    "startQuiz": "Start quiz"
+  },
+  "ImportPage": {
+    "audienceLabel": "For parents",
+    "title": "Add a quiz",
+    "description": "Paste a quiz JSON created with AI to save it to your family's quiz library. Required fields and the correct answer are also checked on the server.",
+    "jsonLabel": "Quiz JSON",
+    "saving": "Checking...",
+    "save": "Save",
+    "clear": "Clear",
+    "errorsTitle": "Please check your input",
+    "successMessage": "Saved successfully.",
+    "viewList": "View the list"
+  },
+  "ResultsPage": {
+    "title": "Past results",
+    "description": "Once you take on a saved quiz, your learning history will show up here.",
+    "browseQuizzes": "Browse quizzes"
+  },
+  "QuizSession": {
+    "completedLabel": "Quiz completed",
+    "scoreLabel": "Score",
+    "scoreValue": "{score} / {maxScore} pts",
+    "correctCountLabel": "Correct answers",
+    "correctCountValue": "{count} questions",
+    "accuracyLabel": "Accuracy",
+    "accuracyValue": "{value}%",
+    "retry": "Try again",
+    "backToListButton": "Back to list",
+    "correctAria": "Correct",
+    "incorrectAria": "Incorrect",
+    "yourAnswerAndCorrectAnswer": "Your answer: {selectedAnswer} / Correct answer: {correctAnswer}",
+    "questionCounter": "{current} / {total} questions",
+    "correctFeedback": "That's correct",
+    "incorrectFeedback": "Let's double-check this one",
+    "correctAnswerPrefix": "Correct answer: {correctAnswer}",
+    "memoryTip": "Memory tip: {tip}",
+    "nextQuestion": "Next question",
+    "viewResults": "View results"
+  },
+  "Validation": {
+    "required": "Please enter a value",
+    "choicesMin": "At least 2 choices are required",
+    "choicesDuplicate": "Choices must not be duplicated",
+    "correctAnswerMustBeChoice": "The correct answer must be one of the choices",
+    "questionsMin": "Add at least 1 question",
+    "jsonInvalid": "The JSON format is invalid",
+    "unknownError": "Could not verify the quiz",
+    "saveFailed": "Could not save. Please check your Neon connection.",
+    "sampleCannotDelete": "The sample quiz cannot be deleted",
+    "issueMessage": "{path}: {message}"
+  }
+}
