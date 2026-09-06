@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
 import { Link } from "@/i18n/navigation";
 import { sampleQuiz } from "@/lib/db/schema";
-import { quizPrompt } from "@/lib/quiz-prompt";
+import { getQuizPrompt } from "@/lib/quiz-prompt";
 
 const example = JSON.stringify(sampleQuiz, null, 2);
 
@@ -16,6 +16,7 @@ export default function ImportPage() {
   const t = useTranslations("ImportPage");
   const tNav = useTranslations("Nav");
   const locale = useLocale();
+  const quizPrompt = getQuizPrompt(locale);
   const [raw, setRaw] = useState(example);
   const [errors, setErrors] = useState<string[]>([]);
   const [success, setSuccess] = useState(false);
