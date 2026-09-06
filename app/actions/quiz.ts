@@ -104,7 +104,7 @@ export async function importQuiz(locale: string, raw: string) {
         })),
       );
     });
-    revalidatePath("/");
+    revalidatePath("/[locale]", "layout");
     return { ok: true, errors: [] };
   } catch (error) {
     console.error("importQuiz failed", error);
@@ -118,7 +118,7 @@ export async function deleteQuiz(locale: string, id: string) {
     return { ok: false, message: t("sampleCannotDelete") };
   }
   await db.update(quizzes).set({ deletedAt: new Date() }).where(eq(quizzes.id, id));
-  revalidatePath("/");
+  revalidatePath("/[locale]", "layout");
   return { ok: true };
 }
 

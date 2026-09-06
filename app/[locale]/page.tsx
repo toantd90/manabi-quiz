@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
 
+// quiz list changes on import/delete; avoid serving a stale build-time cache
+export const dynamic = "force-dynamic";
+
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const [quizzes, t, tNav] = await Promise.all([

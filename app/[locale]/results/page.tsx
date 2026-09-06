@@ -6,6 +6,9 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { ResultsFilter } from "@/components/results-filter";
 import { Link } from "@/i18n/navigation";
 
+// attempt history changes after every submission; avoid serving a stale build-time cache
+export const dynamic = "force-dynamic";
+
 export default async function ResultsPage() {
   const [t, tNav, locale, attempts] = await Promise.all([
     getTranslations("ResultsPage"),
