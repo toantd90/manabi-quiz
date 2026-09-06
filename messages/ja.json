@@ -41,7 +41,11 @@
   "ResultsPage": {
     "title": "過去の結果",
     "description": "保存したクイズに挑戦すると、ここに学習の記録が表示されます。",
-    "browseQuizzes": "クイズを探す"
+    "browseQuizzes": "クイズを探す",
+    "retryQuiz": "もう一度挑戦",
+    "scoreValue": "{score} / {maxScore}点",
+    "correctCountValue": "{count} / {total}問正解",
+    "accuracyValue": "正答率{value}%"
   },
   "QuizSession": {
     "completedLabel": "クイズ完了",

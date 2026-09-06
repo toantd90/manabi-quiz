@@ -41,7 +41,11 @@
   "ResultsPage": {
     "title": "Past results",
     "description": "Once you take on a saved quiz, your learning history will show up here.",
-    "browseQuizzes": "Browse quizzes"
+    "browseQuizzes": "Browse quizzes",
+    "retryQuiz": "Try again",
+    "scoreValue": "{score} / {maxScore} pts",
+    "correctCountValue": "{count} / {total} correct",
+    "accuracyValue": "{value}% accuracy"
   },
   "QuizSession": {
     "completedLabel": "Quiz completed",
