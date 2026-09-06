@@ -96,8 +96,12 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               <RotateCcw data-icon="inline-start" />
               {t("retry")}
             </Button>
-            <Button variant="outline">
-              <Link href="/">{t("backToListButton")}</Link>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/" />}
+            >
+              {t("backToListButton")}
             </Button>
           </div>
         </section>

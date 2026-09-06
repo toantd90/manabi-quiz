@@ -34,8 +34,12 @@ export default async function ResultsPage() {
             <p className="mx-auto mt-3 max-w-md leading-7 text-muted-foreground">
               {t("description")}
             </p>
-            <Button className="mt-6">
-              <Link href="/">{t("browseQuizzes")}</Link>
+            <Button
+              className="mt-6"
+              nativeButton={false}
+              render={<Link href="/" />}
+            >
+              {t("browseQuizzes")}
             </Button>
           </section>
         ) : (

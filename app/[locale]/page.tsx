@@ -41,17 +41,22 @@ export default async function Page({
             </span>
           </Link>
           <nav className="flex items-center gap-2">
-            <Button variant="ghost" size="sm">
-              <Link href="/results">
-                <History data-icon="inline-start" />
-                {tNav("pastResults")}
-              </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              nativeButton={false}
+              render={<Link href="/results" />}
+            >
+              <History data-icon="inline-start" />
+              {tNav("pastResults")}
             </Button>
-            <Button size="sm">
-              <Link href="/import">
-                <FilePlus2 data-icon="inline-start" />
-                {tNav("addQuiz")}
-              </Link>
+            <Button
+              size="sm"
+              nativeButton={false}
+              render={<Link href="/import" />}
+            >
+              <FilePlus2 data-icon="inline-start" />
+              {tNav("addQuiz")}
             </Button>
           </nav>
         </div>
@@ -70,11 +75,15 @@ export default async function Page({
             <p className="mt-5 max-w-lg text-sm leading-6 opacity-85">
               {t("heroDescription")}
             </p>
-            <Button className="mt-7 bg-background text-foreground hover:bg-background/90">
-              <Link href={quizzes[0] ? `/quiz/${quizzes[0].id}` : "/import"}>
-                {t("startCta")}
-                <ChevronRight data-icon="inline-end" />
-              </Link>
+            <Button
+              className="mt-7 bg-background text-foreground hover:bg-background/90"
+              nativeButton={false}
+              render={
+                <Link href={quizzes[0] ? `/quiz/${quizzes[0].id}` : "/import"} />
+              }
+            >
+              {t("startCta")}
+              <ChevronRight data-icon="inline-end" />
             </Button>
           </div>
           <div className="flex items-end justify-end">
@@ -101,11 +110,13 @@ export default async function Page({
               {t("libraryTitle")}
             </h2>
           </div>
-          <Button variant="outline">
-            <Link href="/import">
-              <FilePlus2 data-icon="inline-start" />
-              {t("addFromJson")}
-            </Link>
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={<Link href="/import" />}
+          >
+            <FilePlus2 data-icon="inline-start" />
+            {t("addFromJson")}
           </Button>
         </div>
         <section className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -147,11 +158,14 @@ export default async function Page({
                   {t("questionCount", { count: quiz.questionCount })}
                 </span>
               </div>
-              <Button className="mt-6 w-full" variant="secondary">
-                <Link href={`/quiz/${quiz.id}`}>
-                  {t("startQuiz")}
-                  <ChevronRight data-icon="inline-end" />
-                </Link>
+              <Button
+                className="mt-6 w-full"
+                variant="secondary"
+                nativeButton={false}
+                render={<Link href={`/quiz/${quiz.id}`} />}
+              >
+                {t("startQuiz")}
+                <ChevronRight data-icon="inline-end" />
               </Button>
             </article>
           ))}
