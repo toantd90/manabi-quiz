@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { AnswerFeedbackSetting } from "@/components/answer-feedback-setting";
 import { getStoredShowAnswerImmediately } from "@/lib/quiz-settings";
 import { Link } from "@/i18n/navigation";
@@ -238,6 +239,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           </Link>
           <div className="flex items-center gap-2">
             <AnswerFeedbackSetting />
+            <ThemeToggle />
             <DisplaySettings />
           </div>
         </div>
@@ -291,7 +293,10 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {t("reviewBack")}
           </button>
-          <DisplaySettings />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <DisplaySettings />
+          </div>
         </div>
         <div>
           <div className="flex items-center justify-between text-sm">
@@ -369,7 +374,10 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <DisplaySettings />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <DisplaySettings />
+          </div>
         </div>
         <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-8">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
@@ -481,6 +489,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         </Link>
         <div className="flex items-center gap-2">
           <AnswerFeedbackSetting />
+          <ThemeToggle />
           <DisplaySettings />
         </div>
       </div>

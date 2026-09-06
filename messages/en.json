@@ -11,7 +11,10 @@
     "backToList": "Back to quiz list",
     "kidsTheme": "Toggle kids theme",
     "kidsPalette": "Pick a kids color",
+    "languageLabel": "Language",
+    "paletteLabel": "Palette",
     "displaySettings": "Display settings",
+    "accountMenu": "Account menu",
     "signIn": "Sign in with Google",
     "signOut": "Sign out"
   },

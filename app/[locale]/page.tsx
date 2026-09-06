@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { listQuizzes } from "@/app/actions/quiz";
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { DisplaySettings } from "@/components/display-settings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { QuizLibrary } from "@/components/quiz-library";
 import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
                 <span className="hidden sm:inline">{tNav("addQuiz")}</span>
               </Button>
             )}
-            <DisplaySettings />
+            <ThemeToggle />
             <UserMenu locale={locale} />
           </nav>
         </div>

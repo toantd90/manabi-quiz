@@ -5,7 +5,7 @@ import { ArrowLeft, CheckCircle2, ClipboardCopy, FileJson, Sparkles, Upload } fr
 import { useLocale, useTranslations } from "next-intl";
 import { importQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
-import { DisplaySettings } from "@/components/display-settings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "@/i18n/navigation";
 import { sampleQuiz } from "@/lib/db/schema";
 import { getQuizPrompt } from "@/lib/quiz-prompt";
@@ -33,7 +33,7 @@ export function ImportForm({ userMenu }: { userMenu: ReactNode }) {
             {tNav("backToList")}
           </Link>
           <div className="flex items-center gap-2">
-            <DisplaySettings />
+            <ThemeToggle />
             {userMenu}
           </div>
         </div>

@@ -11,7 +11,10 @@
     "backToList": "クイズ一覧へ",
     "kidsTheme": "きっずテーマの切り替え",
     "kidsPalette": "きっずの色を選ぶ",
+    "languageLabel": "言語",
+    "paletteLabel": "カラー",
     "displaySettings": "表示設定",
+    "accountMenu": "アカウントメニュー",
     "signIn": "Googleでログイン",
     "signOut": "ログアウト"
   },

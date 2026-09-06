@@ -2,7 +2,7 @@ import { ArrowLeft, Lock } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { DisplaySettings } from "@/components/display-settings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ImportForm } from "@/components/import-form";
 import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
@@ -25,7 +25,7 @@ export default async function ImportPage({ params }: { params: Promise<{ locale:
               {tNav("backToList")}
             </Link>
             <div className="flex items-center gap-2">
-              <DisplaySettings />
+              <ThemeToggle />
               <UserMenu locale={locale} />
             </div>
           </div>

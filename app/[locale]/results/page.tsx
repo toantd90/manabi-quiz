@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { listAttempts } from "@/app/actions/quiz";
 import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { DisplaySettings } from "@/components/display-settings";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ResultsFilter } from "@/components/results-filter";
 import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
@@ -27,7 +27,7 @@ export default async function ResultsPage({ params }: { params: Promise<{ locale
               {tNav("backToList")}
             </Link>
             <div className="flex items-center gap-2">
-              <DisplaySettings />
+              <ThemeToggle />
               <UserMenu locale={locale} />
             </div>
           </div>
@@ -64,7 +64,7 @@ export default async function ResultsPage({ params }: { params: Promise<{ locale
             {tNav("backToList")}
           </Link>
           <div className="flex items-center gap-2">
-            <DisplaySettings />
+            <ThemeToggle />
             <UserMenu locale={locale} />
           </div>
         </div>
