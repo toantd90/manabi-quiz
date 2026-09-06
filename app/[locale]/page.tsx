@@ -18,17 +18,19 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   return (
     <main className="min-h-screen bg-background">
       <header className="border-b bg-card/80">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-4 sm:px-5 sm:py-5">
           <Link href="/" className="flex items-center gap-3">
-            <span className="flex size-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <Sparkles data-icon="inline-start" />
             </span>
             <span>
               <span className="block text-sm font-bold tracking-wide">{tNav("brandName")}</span>
-              <span className="block text-xs text-muted-foreground">{tNav("brandTagline")}</span>
+              <span className="hidden text-xs text-muted-foreground sm:block">
+                {tNav("brandTagline")}
+              </span>
             </span>
           </Link>
-          <nav className="flex items-center gap-2">
+          <nav className="flex flex-wrap items-center gap-2">
             <Button
               variant="ghost"
               size="sm"
@@ -36,18 +38,18 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               render={<Link href="/results" />}
             >
               <History data-icon="inline-start" />
-              {tNav("pastResults")}
+              <span className="hidden sm:inline">{tNav("pastResults")}</span>
             </Button>
             <Button size="sm" nativeButton={false} render={<Link href="/import" />}>
               <FilePlus2 data-icon="inline-start" />
-              {tNav("addQuiz")}
+              <span className="hidden sm:inline">{tNav("addQuiz")}</span>
             </Button>
             <LanguageSwitcher />
           </nav>
         </div>
       </header>
-      <div className="mx-auto max-w-6xl px-5 py-10">
-        <section className="grid gap-8 rounded-[2rem] bg-primary p-7 text-primary-foreground shadow-sm md:grid-cols-[1.3fr_.7fr] md:p-10">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-5 sm:py-10">
+        <section className="grid gap-6 rounded-[2rem] bg-primary p-5 text-primary-foreground shadow-sm sm:gap-8 sm:p-7 md:grid-cols-[1.3fr_.7fr] md:p-10">
           <div>
             <p className="text-sm font-semibold opacity-80">{t("heroLabel")}</p>
             <h1 className="mt-3 max-w-xl text-balance text-3xl font-bold leading-tight sm:text-5xl">
@@ -80,7 +82,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             </div>
           </div>
         </section>
-        <div className="mt-12 flex items-end justify-between gap-4">
+        <div className="mt-10 flex flex-wrap items-end justify-between gap-4 sm:mt-12">
           <div>
             <p className="text-sm font-semibold text-primary">{t("libraryLabel")}</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight">{t("libraryTitle")}</h2>
@@ -94,7 +96,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           {quizzes.map((quiz) => (
             <article
               key={quiz.id}
-              className="group flex flex-col rounded-3xl border bg-card p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group flex flex-col rounded-3xl border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
             >
               <div className="flex items-start justify-between gap-3">
                 <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold">

@@ -169,7 +169,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     const reviewedCount = reviewedIds.size;
     const currentMistake = mistakes[reviewIndex];
     return (
-      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
+      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-10">
         <div className="flex items-center justify-between gap-4">
           <button
             type="button"
@@ -204,9 +204,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           </div>
         )}
         {currentMistake && (
-          <section className="rounded-[2rem] border bg-card p-6 shadow-sm sm:p-10">
+          <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-10">
             <p className="text-sm text-muted-foreground">{quiz.title}</p>
-            <h1 className="mt-4 text-2xl font-bold leading-relaxed sm:text-3xl">
+            <h1 className="mt-4 text-xl font-bold leading-relaxed sm:text-3xl">
               {currentMistake.question.question}
             </h1>
             <div className="mt-6 rounded-2xl border bg-destructive/10 p-5">
@@ -247,7 +247,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   }
   if (result)
     return (
-      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
+      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-10">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
@@ -259,9 +259,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           </Link>
           <LanguageSwitcher />
         </div>
-        <section className="rounded-[2rem] border bg-card p-8 shadow-sm">
+        <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-8">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight">{result.quiz.title}</h1>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">{result.quiz.title}</h1>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-secondary p-5">
               <p className="text-sm text-muted-foreground">{t("scoreLabel")}</p>
@@ -349,7 +349,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
       </main>
     );
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
+    <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-10">
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/"
@@ -362,7 +362,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         <LanguageSwitcher />
       </div>
       <div>
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
           <span className="font-semibold text-primary">{quiz.subject}</span>
           <span
             className={`flex items-center gap-1.5 font-semibold ${timeLeft <= 30 ? "text-destructive" : "text-muted-foreground"}`}
@@ -384,9 +384,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           />
         </div>
       </div>
-      <section className="rounded-[2rem] border bg-card p-6 shadow-sm sm:p-10">
+      <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-10">
         <p className="text-sm text-muted-foreground">{quiz.title}</p>
-        <h1 className="mt-4 text-2xl font-bold leading-relaxed sm:text-3xl">{current.question}</h1>
+        <h1 className="mt-4 text-xl font-bold leading-relaxed sm:text-3xl">{current.question}</h1>
         <div className="mt-8 flex flex-col gap-3">
           {current.choices.map((choice, choiceIndex) => (
             <button
@@ -394,7 +394,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               type="button"
               disabled={selected !== null}
               onClick={() => setSelected(choice)}
-              className={`rounded-2xl border p-4 text-left text-base transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${selected === choice ? "border-primary bg-primary/10" : ""}`}
+              className={`rounded-2xl border p-3 text-left text-base transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-4 ${selected === choice ? "border-primary bg-primary/10" : ""}`}
             >
               <span className="mr-3 inline-flex size-8 items-center justify-center rounded-full bg-secondary text-sm font-bold">
                 {String.fromCharCode(65 + choiceIndex)}

@@ -75,7 +75,7 @@ export function ResultsFilter({ attempts, locale }: { attempts: Attempt[]; local
       ) : (
         <ul className="mt-6 flex flex-col gap-4">
           {filtered.map((attempt) => (
-            <li key={attempt.id} className="rounded-3xl border bg-card p-6 shadow-sm">
+            <li key={attempt.id} className="rounded-3xl border bg-card p-4 shadow-sm sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-lg font-bold leading-snug">{attempt.quizTitleSnapshot}</h2>
                 <Link

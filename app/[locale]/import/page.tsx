@@ -21,7 +21,7 @@ export default function ImportPage() {
   const [pending, setPending] = useState(false);
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-4xl px-5 py-10">
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-5 sm:py-10">
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
             <ArrowLeft data-icon="inline-start" />
@@ -29,19 +29,19 @@ export default function ImportPage() {
           </Link>
           <LanguageSwitcher />
         </div>
-        <div className="mt-10">
+        <div className="mt-8 sm:mt-10">
           <div className="flex items-center gap-3">
-            <span className="flex size-11 items-center justify-center rounded-2xl bg-secondary">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-secondary">
               <FileJson data-icon="inline-start" />
             </span>
             <div>
               <p className="text-sm font-semibold text-primary">{t("audienceLabel")}</p>
-              <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{t("title")}</h1>
             </div>
           </div>
           <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">{t("description")}</p>
         </div>
-        <section className="mt-8 rounded-3xl border bg-card p-5 shadow-sm sm:p-7">
+        <section className="mt-8 rounded-3xl border bg-card p-4 shadow-sm sm:p-7">
           <label htmlFor="quiz-json" className="text-sm font-semibold">
             {t("jsonLabel")}
           </label>
@@ -49,7 +49,7 @@ export default function ImportPage() {
             id="quiz-json"
             value={raw}
             onChange={(event) => setRaw(event.target.value)}
-            className="mt-3 min-h-[440px] w-full rounded-2xl border bg-background p-4 font-mono text-sm leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="mt-3 min-h-70 w-full rounded-2xl border bg-background p-4 font-mono text-sm leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-110"
             spellCheck={false}
           />
           <div className="mt-5 flex flex-wrap items-center gap-3">

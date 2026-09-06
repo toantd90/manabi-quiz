@@ -18,7 +18,7 @@ export default async function ResultsPage() {
   ]);
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-4xl px-5 py-10">
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-5 sm:py-10">
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
             <ArrowLeft data-icon="inline-start" />
@@ -27,7 +27,7 @@ export default async function ResultsPage() {
           <LanguageSwitcher />
         </div>
         {attempts.length === 0 ? (
-          <section className="mt-10 rounded-[2rem] border bg-card p-8 text-center shadow-sm">
+          <section className="mt-10 rounded-[2rem] border bg-card p-6 text-center shadow-sm sm:p-8">
             <span className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-secondary">
               <History data-icon="inline-start" />
             </span>
