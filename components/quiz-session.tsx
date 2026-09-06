@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { PaletteSwatches } from "@/components/palette-swatches";
 import { Link } from "@/i18n/navigation";
 
 const SECONDS_PER_QUESTION = 60;
@@ -187,7 +189,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {t("reviewBack")}
           </button>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <PaletteSwatches />
+          </div>
         </div>
         <div>
           <div className="flex items-center justify-between text-sm">
@@ -265,7 +271,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <PaletteSwatches />
+          </div>
         </div>
         <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-8">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
@@ -367,7 +377,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
-        <LanguageSwitcher />
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <ThemeToggle />
+          <PaletteSwatches />
+        </div>
       </div>
       <div>
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">

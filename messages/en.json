@@ -8,7 +8,9 @@
     "brandTagline": "Learn together as a family",
     "pastResults": "Past results",
     "addQuiz": "Add a quiz",
-    "backToList": "Back to quiz list"
+    "backToList": "Back to quiz list",
+    "kidsTheme": "Toggle kids theme",
+    "kidsPalette": "Pick a kids color"
   },
   "HomePage": {
     "heroLabel": "Today's learning time",

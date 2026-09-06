@@ -8,7 +8,9 @@
     "brandTagline": "家族で楽しく学ぼう",
     "pastResults": "過去の結果",
     "addQuiz": "クイズを追加",
-    "backToList": "クイズ一覧へ"
+    "backToList": "クイズ一覧へ",
+    "kidsTheme": "きっずテーマの切り替え",
+    "kidsPalette": "きっずの色を選ぶ"
   },
   "HomePage": {
     "heroLabel": "今日のまなび時間",

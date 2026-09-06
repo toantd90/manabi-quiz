@@ -6,6 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { importQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { PaletteSwatches } from "@/components/palette-swatches";
 import { Link } from "@/i18n/navigation";
 import { sampleQuiz } from "@/lib/db/schema";
 
@@ -27,7 +29,11 @@ export default function ImportPage() {
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <PaletteSwatches />
+          </div>
         </div>
         <div className="mt-8 sm:mt-10">
           <div className="flex items-center gap-3">
