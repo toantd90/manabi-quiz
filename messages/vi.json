@@ -32,7 +32,10 @@
     "noMineQuizzes": "Bạn chưa thêm câu đố nào.",
     "deleteAria": "Xóa {title}",
     "questionCount": "{count} câu hỏi",
-    "startQuiz": "Bắt đầu"
+    "startQuiz": "Bắt đầu",
+    "paginationPrevious": "Trang trước",
+    "paginationNext": "Trang sau",
+    "paginationPage": "Trang {current} / {total}"
   },
   "ImportPage": {
     "audienceLabel": "Dành cho phụ huynh",
@@ -73,7 +76,10 @@
     "statusNeedsReview": "Cần ôn lại",
     "noFilterResults": "Không có kết quả phù hợp với điều kiện lọc.",
     "signInRequiredTitle": "Đăng nhập để xem kết quả của bạn",
-    "signInRequiredDescription": "Kết quả trước đây gắn với tài khoản của bạn. Đăng nhập bằng Google để xem lịch sử làm câu đố."
+    "signInRequiredDescription": "Kết quả trước đây gắn với tài khoản của bạn. Đăng nhập bằng Google để xem lịch sử làm câu đố.",
+    "paginationPrevious": "Trang trước",
+    "paginationNext": "Trang sau",
+    "paginationPage": "Trang {current} / {total}"
   },
   "QuizSession": {
     "completedLabel": "Hoàn thành câu đố",

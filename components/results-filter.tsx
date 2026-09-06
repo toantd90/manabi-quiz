@@ -1,10 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+
+const PAGE_SIZE = 10;
 
 type Attempt = {
   id: string;
@@ -43,6 +46,7 @@ export function ResultsFilter({
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<StatusFilter>("all");
   const [owner, setOwner] = useState<OwnerFilter>("all");
+  const [page, setPage] = useState(1);
   const mineCount = attempts.filter((attempt) => attempt.userId === currentUserId).length;
   const dateFormatter = useMemo(
     () => new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }),
@@ -57,6 +61,9 @@ export function ResultsFilter({
     const matchesOwner = owner === "all" || attempt.userId === currentUserId;
     return matchesSearch && matchesStatus && matchesOwner;
   });
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   return (
     <>
       <div className="mt-6 inline-flex rounded-full border bg-card p-1 text-sm">
@@ -64,7 +71,10 @@ export function ResultsFilter({
           <button
             key={option}
             type="button"
-            onClick={() => setOwner(option)}
+            onClick={() => {
+              setOwner(option);
+              setPage(1);
+            }}
             className={cn(
               "rounded-full px-3.5 py-1.5 font-semibold transition",
               owner === option
@@ -87,14 +97,20 @@ export function ResultsFilter({
           <input
             type="text"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
             placeholder={t("searchPlaceholder")}
             className="h-10 w-full rounded-xl border bg-card pr-3.5 pl-9.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           />
         </label>
         <select
           value={status}
-          onChange={(event) => setStatus(event.target.value as StatusFilter)}
+          onChange={(event) => {
+            setStatus(event.target.value as StatusFilter);
+            setPage(1);
+          }}
           className="h-10 rounded-xl border bg-card px-3.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <option value="all">{t("statusAll")}</option>
@@ -106,7 +122,7 @@ export function ResultsFilter({
         <p className="mt-8 text-center text-sm text-muted-foreground">{t("noFilterResults")}</p>
       ) : (
         <ul className="mt-6 flex flex-col gap-4">
-          {filtered.map((attempt) => (
+          {paginated.map((attempt) => (
             <li key={attempt.id} className="rounded-3xl border bg-card p-4 shadow-sm sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-lg font-bold leading-snug">{attempt.quizTitleSnapshot}</h2>
@@ -147,6 +163,31 @@ export function ResultsFilter({
             </li>
           ))}
         </ul>
+      )}
+      {totalPages > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label={t("paginationPrevious")}
+            disabled={currentPage <= 1}
+            onClick={() => setPage(currentPage - 1)}
+          >
+            <ChevronLeft />
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {t("paginationPage", { current: currentPage, total: totalPages })}
+          </span>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label={t("paginationNext")}
+            disabled={currentPage >= totalPages}
+            onClick={() => setPage(currentPage + 1)}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
       )}
     </>
   );

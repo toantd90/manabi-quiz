@@ -32,7 +32,10 @@
     "noMineQuizzes": "まだクイズを追加していません。",
     "deleteAria": "{title}を削除",
     "questionCount": "{count}問",
-    "startQuiz": "クイズを始める"
+    "startQuiz": "クイズを始める",
+    "paginationPrevious": "前のページ",
+    "paginationNext": "次のページ",
+    "paginationPage": "{total}ページ中{current}ページ目"
   },
   "ImportPage": {
     "audienceLabel": "保護者向け",
@@ -73,7 +76,10 @@
     "statusNeedsReview": "要復習",
     "noFilterResults": "条件に一致する結果がありません。",
     "signInRequiredTitle": "結果を見るにはログインが必要です",
-    "signInRequiredDescription": "過去の結果はアカウントに紐づいています。Googleでログインしてクイズの履歴を確認しましょう。"
+    "signInRequiredDescription": "過去の結果はアカウントに紐づいています。Googleでログインしてクイズの履歴を確認しましょう。",
+    "paginationPrevious": "前のページ",
+    "paginationNext": "次のページ",
+    "paginationPage": "{total}ページ中{current}ページ目"
   },
   "QuizSession": {
     "completedLabel": "クイズ完了",

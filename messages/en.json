@@ -32,7 +32,10 @@
     "noMineQuizzes": "You haven't added any quizzes yet.",
     "deleteAria": "Delete {title}",
     "questionCount": "{count} questions",
-    "startQuiz": "Start quiz"
+    "startQuiz": "Start quiz",
+    "paginationPrevious": "Previous page",
+    "paginationNext": "Next page",
+    "paginationPage": "Page {current} of {total}"
   },
   "ImportPage": {
     "audienceLabel": "For parents",
@@ -73,7 +76,10 @@
     "statusNeedsReview": "Needs review",
     "noFilterResults": "No results match your filter.",
     "signInRequiredTitle": "Sign in to see your results",
-    "signInRequiredDescription": "Past results are tied to your account. Sign in with Google to view your quiz history."
+    "signInRequiredDescription": "Past results are tied to your account. Sign in with Google to view your quiz history.",
+    "paginationPrevious": "Previous page",
+    "paginationNext": "Next page",
+    "paginationPage": "Page {current} of {total}"
   },
   "QuizSession": {
     "completedLabel": "Quiz completed",

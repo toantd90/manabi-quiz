@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Clock3, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock3, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { deleteQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+
+const PAGE_SIZE = 9;
 
 type QuizListItem = {
   id: string;
@@ -31,6 +33,7 @@ export function QuizLibrary({
 }) {
   const t = useTranslations("HomePage");
   const [filter, setFilter] = useState<Filter>("all");
+  const [page, setPage] = useState(1);
   const mineCount = currentUserId
     ? quizzes.filter((quiz) => quiz.importedBy === currentUserId).length
     : 0;
@@ -38,6 +41,9 @@ export function QuizLibrary({
     currentUserId && filter === "mine"
       ? quizzes.filter((quiz) => quiz.importedBy === currentUserId)
       : quizzes;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   return (
     <>
       {currentUserId && (
@@ -46,7 +52,10 @@ export function QuizLibrary({
             <button
               key={option}
               type="button"
-              onClick={() => setFilter(option)}
+              onClick={() => {
+                setFilter(option);
+                setPage(1);
+              }}
               className={cn(
                 "rounded-full px-3.5 py-1.5 font-semibold transition",
                 filter === option
@@ -65,7 +74,7 @@ export function QuizLibrary({
         <p className="mt-8 text-center text-sm text-muted-foreground">{t("noMineQuizzes")}</p>
       ) : (
         <section className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((quiz) => (
+          {paginated.map((quiz) => (
             <article
               key={quiz.id}
               className="group flex flex-col rounded-3xl border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
@@ -112,6 +121,31 @@ export function QuizLibrary({
             </article>
           ))}
         </section>
+      )}
+      {totalPages > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label={t("paginationPrevious")}
+            disabled={currentPage <= 1}
+            onClick={() => setPage(currentPage - 1)}
+          >
+            <ChevronLeft />
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {t("paginationPage", { current: currentPage, total: totalPages })}
+          </span>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label={t("paginationNext")}
+            disabled={currentPage >= totalPages}
+            onClick={() => setPage(currentPage + 1)}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
       )}
     </>
   );
