@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const localeLabels: Record<(typeof routing.locales)[number], string> = {
   ja: "日本語",
   en: "English",
+  vi: "Tiếng Việt",
 };
 
 export function LanguageSwitcher() {
