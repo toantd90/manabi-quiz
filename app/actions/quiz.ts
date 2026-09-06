@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, count, desc, eq, isNull } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { db } from "@/lib/db";
@@ -16,11 +16,14 @@ function resolveLocale(locale: string) {
 export async function listQuizzes() {
   try {
     const rows = await db
-      .select()
+      .select({ quiz: quizzes, questionCount: count(questions.id) })
       .from(quizzes)
+      .leftJoin(questions, eq(questions.quizId, quizzes.id))
       .where(isNull(quizzes.deletedAt))
+      .groupBy(quizzes.id)
       .orderBy(desc(quizzes.createdAt));
-    if (rows.length) return rows.map((quiz) => ({ ...quiz, questionCount: 0 }));
+    if (rows.length)
+      return rows.map(({ quiz, questionCount }) => ({ ...quiz, questionCount }));
   } catch (error) {
     console.error("listQuizzes failed", error); /* preview can still render the sample */
   }
