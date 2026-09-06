@@ -32,10 +32,26 @@ type Quiz = {
   questions: Question[];
 };
 
+// switching language mid-quiz remounts this component; progress is kept in sessionStorage keyed by quiz id
+const storageKeyFor = (quizId: string) => `quiz-session-progress:${quizId}`;
+
+type PersistedState = {
+  questions: Question[];
+  index: number;
+  selected: string | null;
+  answers: { questionId: string; selectedAnswer: string }[];
+  timeLeft: number;
+  result: Awaited<ReturnType<typeof submitAttempt>> | null;
+  reviewMode: boolean;
+  reviewIndex: number;
+  reviewedIds: string[];
+};
+
 export function QuizSession({ quiz }: { quiz: Quiz }) {
   const t = useTranslations("QuizSession");
   const tNav = useTranslations("Nav");
-  const [questions] = useState(() =>
+  const storageKey = storageKeyFor(quiz.id);
+  const [questions, setQuestions] = useState(() =>
     [...quiz.questions]
       .sort(() => Math.random() - 0.5)
       .map((q) => ({
@@ -53,10 +69,75 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   const [reviewMode, setReviewMode] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
+  const [hydrated, setHydrated] = useState(false);
   const mistakes = useMemo(
     () => (result ? result.scored.filter((item) => !item.isCorrect) : []),
     [result],
   );
+  const clearProgress = () => {
+    try {
+      sessionStorage.removeItem(storageKey);
+    } catch {
+      // storage may be unavailable (e.g. private browsing)
+    }
+  };
+
+  // restore progress saved before a remount (e.g. a language switch) instead of resetting the session
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(storageKey);
+      if (raw) {
+        const saved = JSON.parse(raw) as PersistedState;
+        if (saved.questions?.length) {
+          setQuestions(saved.questions);
+          setIndex(saved.index);
+          setSelected(saved.selected);
+          setAnswers(saved.answers);
+          setTimeLeft(saved.timeLeft);
+          setResult(saved.result);
+          setReviewMode(saved.reviewMode);
+          setReviewIndex(saved.reviewIndex);
+          setReviewedIds(new Set(saved.reviewedIds));
+        }
+      }
+    } catch {
+      // ignore corrupt or unavailable storage
+    }
+    setHydrated(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const payload: PersistedState = {
+      questions,
+      index,
+      selected,
+      answers,
+      timeLeft,
+      result,
+      reviewMode,
+      reviewIndex,
+      reviewedIds: Array.from(reviewedIds),
+    };
+    try {
+      sessionStorage.setItem(storageKey, JSON.stringify(payload));
+    } catch {
+      // storage may be unavailable (e.g. private browsing)
+    }
+  }, [
+    hydrated,
+    storageKey,
+    questions,
+    index,
+    selected,
+    answers,
+    timeLeft,
+    result,
+    reviewMode,
+    reviewIndex,
+    reviewedIds,
+  ]);
 
   // marks the mistake currently shown in review mode as reviewed
   useEffect(() => {
@@ -168,7 +249,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
         <div className="flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Link
+            href="/"
+            onClick={clearProgress}
+            className="flex items-center gap-2 text-sm text-muted-foreground"
+          >
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
@@ -205,7 +290,12 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button onClick={() => window.location.reload()}>
+            <Button
+              onClick={() => {
+                clearProgress();
+                window.location.reload();
+              }}
+            >
               <RotateCcw data-icon="inline-start" />
               {t("retry")}
             </Button>
@@ -220,7 +310,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
                 {t("reviewMistakesButton", { count: mistakes.length })}
               </Button>
             )}
-            <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/" onClick={clearProgress} />}
+            >
               {t("backToListButton")}
             </Button>
           </div>
@@ -257,7 +351,11 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
       <div className="flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Link
+          href="/"
+          onClick={clearProgress}
+          className="flex items-center gap-2 text-sm text-muted-foreground"
+        >
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
