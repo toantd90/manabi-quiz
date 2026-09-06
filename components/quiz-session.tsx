@@ -5,9 +5,7 @@ import { ArrowLeft, CheckCircle2, CircleAlert, Clock, RotateCcw } from "lucide-r
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { PaletteSwatches } from "@/components/palette-swatches";
+import { DisplaySettings } from "@/components/display-settings";
 import { Link } from "@/i18n/navigation";
 
 const SECONDS_PER_QUESTION = 60;
@@ -161,7 +159,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   useEffect(() => {
     if (result || timeLeft > 0 || submittedRef.current) return;
     submittedRef.current = true;
-    const finalAnswers = selected ? [...answers, { questionId: current.id, selectedAnswer: selected }] : answers;
+    const finalAnswers = selected
+      ? [...answers, { questionId: current.id, selectedAnswer: selected }]
+      : answers;
     void submitAttempt({
       quizId: quiz.id,
       answers: finalAnswers,
@@ -189,11 +189,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {t("reviewBack")}
           </button>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
-            <ThemeToggle />
-            <PaletteSwatches />
-          </div>
+          <DisplaySettings />
         </div>
         <div>
           <div className="flex items-center justify-between text-sm">
@@ -271,15 +267,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
-            <ThemeToggle />
-            <PaletteSwatches />
-          </div>
+          <DisplaySettings />
         </div>
         <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-8">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">{result.quiz.title}</h1>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+            {result.quiz.title}
+          </h1>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-secondary p-5">
               <p className="text-sm text-muted-foreground">{t("scoreLabel")}</p>
@@ -377,11 +371,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
-        <div className="flex items-center gap-2">
-          <LanguageSwitcher />
-          <ThemeToggle />
-          <PaletteSwatches />
-        </div>
+        <DisplaySettings />
       </div>
       <div>
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">

@@ -10,7 +10,8 @@
     "addQuiz": "Add a quiz",
     "backToList": "Back to quiz list",
     "kidsTheme": "Toggle kids theme",
-    "kidsPalette": "Pick a kids color"
+    "kidsPalette": "Pick a kids color",
+    "displaySettings": "Display settings"
   },
   "HomePage": {
     "heroLabel": "Today's learning time",

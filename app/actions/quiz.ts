@@ -22,8 +22,7 @@ export async function listQuizzes() {
       .where(isNull(quizzes.deletedAt))
       .groupBy(quizzes.id)
       .orderBy(desc(quizzes.createdAt));
-    if (rows.length)
-      return rows.map(({ quiz, questionCount }) => ({ ...quiz, questionCount }));
+    if (rows.length) return rows.map(({ quiz, questionCount }) => ({ ...quiz, questionCount }));
   } catch (error) {
     console.error("listQuizzes failed", error); /* preview can still render the sample */
   }

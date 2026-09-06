@@ -2,9 +2,7 @@ import { BookOpen, ChevronRight, Clock3, FilePlus2, History, Sparkles, Trash2 } 
 import { getTranslations } from "next-intl/server";
 import { listQuizzes, deleteQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { PaletteSwatches } from "@/components/palette-swatches";
+import { DisplaySettings } from "@/components/display-settings";
 import { Link } from "@/i18n/navigation";
 
 // quiz list changes on import/delete; avoid serving a stale build-time cache
@@ -46,9 +44,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               <FilePlus2 data-icon="inline-start" />
               <span className="hidden sm:inline">{tNav("addQuiz")}</span>
             </Button>
-            <LanguageSwitcher />
-            <ThemeToggle />
-            <PaletteSwatches />
+            <DisplaySettings />
           </nav>
         </div>
       </header>

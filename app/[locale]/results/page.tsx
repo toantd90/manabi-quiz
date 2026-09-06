@@ -2,9 +2,7 @@ import { ArrowLeft, History } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { listAttempts } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { PaletteSwatches } from "@/components/palette-swatches";
+import { DisplaySettings } from "@/components/display-settings";
 import { ResultsFilter } from "@/components/results-filter";
 import { Link } from "@/i18n/navigation";
 
@@ -26,11 +24,7 @@ export default async function ResultsPage() {
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
-            <ThemeToggle />
-            <PaletteSwatches />
-          </div>
+          <DisplaySettings />
         </div>
         {attempts.length === 0 ? (
           <section className="mt-10 rounded-[2rem] border bg-card p-6 text-center shadow-sm sm:p-8">

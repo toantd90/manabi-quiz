@@ -10,7 +10,8 @@
     "addQuiz": "クイズを追加",
     "backToList": "クイズ一覧へ",
     "kidsTheme": "きっずテーマの切り替え",
-    "kidsPalette": "きっずの色を選ぶ"
+    "kidsPalette": "きっずの色を選ぶ",
+    "displaySettings": "表示設定"
   },
   "HomePage": {
     "heroLabel": "今日のまなび時間",
