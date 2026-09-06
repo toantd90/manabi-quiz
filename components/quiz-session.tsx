@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, CheckCircle2, CircleAlert, Clock, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
@@ -70,6 +70,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   const [reviewIndex, setReviewIndex] = useState(0);
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
   const [hydrated, setHydrated] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  // guards against duplicate submitAttempt calls from rapid clicks or a race with the timeout auto-submit
+  const submittedRef = useRef(false);
   const mistakes = useMemo(
     () => (result ? result.scored.filter((item) => !item.isCorrect) : []),
     [result],
@@ -154,13 +157,18 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   }, [result, timeLeft]);
 
   useEffect(() => {
-    if (result || timeLeft > 0) return;
+    if (result || timeLeft > 0 || submittedRef.current) return;
+    submittedRef.current = true;
     const finalAnswers = selected ? [...answers, { questionId: current.id, selectedAnswer: selected }] : answers;
     void submitAttempt({
       quizId: quiz.id,
       answers: finalAnswers,
       durationSeconds: totalSeconds,
-    }).then(setResult);
+    })
+      .then(setResult)
+      .catch(() => {
+        submittedRef.current = false;
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, result]);
 
@@ -424,18 +432,27 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         )}
         <Button
           className="mt-6 w-full"
-          disabled={!selected}
+          disabled={!selected || submitting}
           onClick={async () => {
+            if (submittedRef.current) return;
             const next = [...answers, { questionId: current.id, selectedAnswer: selected! }];
-            if (index === questions.length - 1)
-              setResult(
-                await submitAttempt({
-                  quizId: quiz.id,
-                  answers: next,
-                  durationSeconds: totalSeconds - timeLeft,
-                }),
-              );
-            else {
+            if (index === questions.length - 1) {
+              submittedRef.current = true;
+              setSubmitting(true);
+              try {
+                setResult(
+                  await submitAttempt({
+                    quizId: quiz.id,
+                    answers: next,
+                    durationSeconds: totalSeconds - timeLeft,
+                  }),
+                );
+              } catch (error) {
+                submittedRef.current = false;
+                setSubmitting(false);
+                throw error;
+              }
+            } else {
               setAnswers(next);
               setSelected(null);
               setIndex(index + 1);
