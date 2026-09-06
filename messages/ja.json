@@ -27,8 +27,8 @@
     "libraryLabel": "クイズライブラリ",
     "libraryTitle": "挑戦するクイズ",
     "addFromJson": "JSONから追加",
-    "filterAll": "すべてのクイズ",
-    "filterMine": "自分が追加したクイズ",
+    "filterAll": "すべてのクイズ（{count}）",
+    "filterMine": "自分が追加したクイズ（{count}）",
     "noMineQuizzes": "まだクイズを追加していません。",
     "deleteAria": "{title}を削除",
     "questionCount": "{count}問",
@@ -66,10 +66,14 @@
     "accuracyValue": "正答率{value}%",
     "searchPlaceholder": "クイズ名で検索",
     "durationValue": "時間：{time}",
+    "filterAll": "みんなの結果（{count}）",
+    "filterMine": "自分の結果（{count}）",
     "statusAll": "すべての結果",
     "statusPassed": "合格",
     "statusNeedsReview": "要復習",
-    "noFilterResults": "条件に一致する結果がありません。"
+    "noFilterResults": "条件に一致する結果がありません。",
+    "signInRequiredTitle": "結果を見るにはログインが必要です",
+    "signInRequiredDescription": "過去の結果はアカウントに紐づいています。Googleでログインしてクイズの履歴を確認しましょう。"
   },
   "QuizSession": {
     "completedLabel": "クイズ完了",

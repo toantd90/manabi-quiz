@@ -70,8 +70,9 @@ export const quizzes = pgTable("quizzes", {
   grade: text("grade"),
   description: text("description"),
   sourceNote: text("source_note"),
-  // nullable: legacy rows and the sample quiz have no importer
-  importedBy: uuid("imported_by").references(() => users.id, { onDelete: "set null" }),
+  importedBy: uuid("imported_by")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -96,6 +97,9 @@ export const questions = pgTable("questions", {
 export const attempts = pgTable("attempts", {
   id: uuid("id").defaultRandom().primaryKey(),
   quizId: uuid("quiz_id").notNull(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   quizTitleSnapshot: text("quiz_title_snapshot").notNull(),
   score: numeric("score").notNull().default("0"),
   maxScore: numeric("max_score").notNull().default("0"),

@@ -31,6 +31,9 @@ export function QuizLibrary({
 }) {
   const t = useTranslations("HomePage");
   const [filter, setFilter] = useState<Filter>("all");
+  const mineCount = currentUserId
+    ? quizzes.filter((quiz) => quiz.importedBy === currentUserId).length
+    : 0;
   const filtered =
     currentUserId && filter === "mine"
       ? quizzes.filter((quiz) => quiz.importedBy === currentUserId)
@@ -51,7 +54,9 @@ export function QuizLibrary({
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              {option === "all" ? t("filterAll") : t("filterMine")}
+              {option === "all"
+                ? t("filterAll", { count: quizzes.length })
+                : t("filterMine", { count: mineCount })}
             </button>
           ))}
         </div>

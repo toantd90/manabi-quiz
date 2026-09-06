@@ -27,8 +27,8 @@
     "libraryLabel": "Quiz library",
     "libraryTitle": "Quizzes to try",
     "addFromJson": "Add from JSON",
-    "filterAll": "All quizzes",
-    "filterMine": "My quizzes",
+    "filterAll": "All quizzes ({count})",
+    "filterMine": "My quizzes ({count})",
     "noMineQuizzes": "You haven't added any quizzes yet.",
     "deleteAria": "Delete {title}",
     "questionCount": "{count} questions",
@@ -66,10 +66,14 @@
     "accuracyValue": "{value}% accuracy",
     "searchPlaceholder": "Search by quiz title",
     "durationValue": "Time: {time}",
+    "filterAll": "Everyone's results ({count})",
+    "filterMine": "My results ({count})",
     "statusAll": "All results",
     "statusPassed": "Passed",
     "statusNeedsReview": "Needs review",
-    "noFilterResults": "No results match your filter."
+    "noFilterResults": "No results match your filter.",
+    "signInRequiredTitle": "Sign in to see your results",
+    "signInRequiredDescription": "Past results are tied to your account. Sign in with Google to view your quiz history."
   },
   "QuizSession": {
     "completedLabel": "Quiz completed",

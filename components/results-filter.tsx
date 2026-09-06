@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 type Attempt = {
   id: string;
   quizId: string;
+  userId: string | null;
   quizTitleSnapshot: string;
   score: string;
   maxScore: string;
@@ -21,6 +22,7 @@ type Attempt = {
 
 const PASS_THRESHOLD = 80;
 type StatusFilter = "all" | "passed" | "needsReview";
+type OwnerFilter = "all" | "mine";
 
 function formatDuration(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -28,10 +30,20 @@ function formatDuration(totalSeconds: number) {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-export function ResultsFilter({ attempts, locale }: { attempts: Attempt[]; locale: string }) {
+export function ResultsFilter({
+  attempts,
+  locale,
+  currentUserId,
+}: {
+  attempts: Attempt[];
+  locale: string;
+  currentUserId: string;
+}) {
   const t = useTranslations("ResultsPage");
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<StatusFilter>("all");
+  const [owner, setOwner] = useState<OwnerFilter>("all");
+  const mineCount = attempts.filter((attempt) => attempt.userId === currentUserId).length;
   const dateFormatter = useMemo(
     () => new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }),
     [locale],
@@ -42,11 +54,31 @@ export function ResultsFilter({ attempts, locale }: { attempts: Attempt[]; local
       .includes(search.trim().toLowerCase());
     const passed = Number(attempt.accuracy) >= PASS_THRESHOLD;
     const matchesStatus = status === "all" || (status === "passed" ? passed : !passed);
-    return matchesSearch && matchesStatus;
+    const matchesOwner = owner === "all" || attempt.userId === currentUserId;
+    return matchesSearch && matchesStatus && matchesOwner;
   });
   return (
     <>
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-6 inline-flex rounded-full border bg-card p-1 text-sm">
+        {(["all", "mine"] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => setOwner(option)}
+            className={cn(
+              "rounded-full px-3.5 py-1.5 font-semibold transition",
+              owner === option
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {option === "all"
+              ? t("filterAll", { count: attempts.length })
+              : t("filterMine", { count: mineCount })}
+          </button>
+        ))}
+      </div>
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
           <Search
             className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"

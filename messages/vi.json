@@ -27,8 +27,8 @@
     "libraryLabel": "Thư viện câu đố",
     "libraryTitle": "Câu đố để thử sức",
     "addFromJson": "Thêm từ JSON",
-    "filterAll": "Tất cả câu đố",
-    "filterMine": "Câu đố của tôi",
+    "filterAll": "Tất cả câu đố ({count})",
+    "filterMine": "Câu đố của tôi ({count})",
     "noMineQuizzes": "Bạn chưa thêm câu đố nào.",
     "deleteAria": "Xóa {title}",
     "questionCount": "{count} câu hỏi",
@@ -66,10 +66,14 @@
     "accuracyValue": "Tỉ lệ đúng {value}%",
     "searchPlaceholder": "Tìm theo tên câu đố",
     "durationValue": "Thời gian: {time}",
+    "filterAll": "Kết quả của mọi người ({count})",
+    "filterMine": "Kết quả của tôi ({count})",
     "statusAll": "Tất cả kết quả",
     "statusPassed": "Đạt",
     "statusNeedsReview": "Cần ôn lại",
-    "noFilterResults": "Không có kết quả phù hợp với điều kiện lọc."
+    "noFilterResults": "Không có kết quả phù hợp với điều kiện lọc.",
+    "signInRequiredTitle": "Đăng nhập để xem kết quả của bạn",
+    "signInRequiredDescription": "Kết quả trước đây gắn với tài khoản của bạn. Đăng nhập bằng Google để xem lịch sử làm câu đố."
   },
   "QuizSession": {
     "completedLabel": "Hoàn thành câu đố",

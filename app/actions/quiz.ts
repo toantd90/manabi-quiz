@@ -40,6 +40,9 @@ export async function listQuizzes() {
 }
 
 export async function listAttempts() {
+  const session = await auth();
+  // signed-in users can browse everyone's attempts, then filter down to their own client-side
+  if (!session?.user) return [];
   try {
     return await db.select().from(attempts).orderBy(desc(attempts.completedAt));
   } catch (error) {
@@ -137,7 +140,8 @@ export async function submitAttempt(input: {
   const quiz = await getQuiz(input.quizId);
   if (!quiz) throw new Error("Quiz not found");
   const session = await auth();
-  const shouldSave = input.quizId !== "sample" && Boolean(session?.user);
+  const userId = session?.user?.id;
+  const shouldSave = input.quizId !== "sample" && Boolean(userId);
   const scored = quiz.questions.map((question) => {
     const answer = input.answers.find((item) => item.questionId === question.id);
     const isCorrect = answer?.selectedAnswer === question.correctAnswer;
@@ -151,12 +155,13 @@ export async function submitAttempt(input: {
   const score = scored.reduce((sum, item) => sum + item.pointsEarned, 0);
   const maxScore = scored.reduce((sum, item) => sum + Number(item.question.points), 0);
   const correctCount = scored.filter((item) => item.isCorrect).length;
-  if (shouldSave) {
+  if (shouldSave && userId) {
     await db.transaction(async (tx) => {
       const [attempt] = await tx
         .insert(attempts)
         .values({
           quizId: input.quizId,
+          userId,
           quizTitleSnapshot: quiz.title,
           score: String(score),
           maxScore: String(maxScore),
