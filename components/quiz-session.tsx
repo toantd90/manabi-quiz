@@ -274,6 +274,12 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
             {result.quiz.title}
           </h1>
+          {!result.saved && (
+            <div className="mt-4 flex items-center gap-2 rounded-2xl border border-amber-300 bg-amber-100 p-4 text-sm font-semibold text-amber-900">
+              <CircleAlert className="size-4 shrink-0" />
+              {t("notSavedNotice")}
+            </div>
+          )}
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-secondary p-5">
               <p className="text-sm text-muted-foreground">{t("scoreLabel")}</p>

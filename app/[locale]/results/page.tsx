@@ -4,6 +4,7 @@ import { listAttempts } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
 import { ResultsFilter } from "@/components/results-filter";
+import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
 
 // attempt history changes after every submission; avoid serving a stale build-time cache
@@ -19,12 +20,15 @@ export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-5 sm:py-10">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
             <ArrowLeft data-icon="inline-start" />
             {tNav("backToList")}
           </Link>
-          <DisplaySettings />
+          <div className="flex items-center gap-2">
+            <DisplaySettings />
+            <UserMenu locale={locale} />
+          </div>
         </div>
         {attempts.length === 0 ? (
           <section className="mt-10 rounded-[2rem] border bg-card p-6 text-center shadow-sm sm:p-8">

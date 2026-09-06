@@ -11,7 +11,9 @@
     "backToList": "クイズ一覧へ",
     "kidsTheme": "きっずテーマの切り替え",
     "kidsPalette": "きっずの色を選ぶ",
-    "displaySettings": "表示設定"
+    "displaySettings": "表示設定",
+    "signIn": "Googleでログイン",
+    "signOut": "ログアウト"
   },
   "HomePage": {
     "heroLabel": "今日のまなび時間",
@@ -47,7 +49,9 @@
     "clear": "クリア",
     "errorsTitle": "入力を確認してください",
     "successMessage": "保存しました。",
-    "viewList": "一覧を見る"
+    "viewList": "一覧を見る",
+    "signInRequiredTitle": "クイズを追加するにはログインが必要です",
+    "signInRequiredDescription": "ゲストはクイズの閲覧・挑戦はできますが、追加はログインしたユーザーのみ可能です。Googleでログインしてライブラリに保存しましょう。"
   },
   "ResultsPage": {
     "title": "過去の結果",
@@ -95,7 +99,8 @@
     "reviewCorrectAnswer": "正解：{answer}",
     "reviewPrevious": "前へ",
     "reviewNext": "次へ",
-    "reviewCompleted": "よくできました！すべての間違いを確認しました。"
+    "reviewCompleted": "よくできました！すべての間違いを確認しました。",
+    "notSavedNotice": "ゲストとして利用しているため、この結果は保存されません。Googleでログインすると履歴を残せます。"
   },
   "Validation": {
     "required": "入力してください",
@@ -107,6 +112,16 @@
     "unknownError": "クイズを確認できませんでした",
     "saveFailed": "保存できませんでした。Neonの接続を確認してください。",
     "sampleCannotDelete": "サンプル問題は削除できません",
-    "issueMessage": "{path}：{message}"
+    "issueMessage": "{path}：{message}",
+    "signInRequired": "クイズを追加するにはGoogleでログインしてください。"
+  },
+  "AuthGate": {
+    "title": "まなびクイズへようこそ",
+    "description": "Googleでログインするとクイズの追加や結果の保存ができます。ログインせずに利用することもできますが、その場合はクイズの追加や結果の保存はできません。",
+    "signInCta": "Googleでログイン",
+    "continueGuestCta": "ログインせずに利用する",
+    "guestWarning": "ゲストはクイズの追加や結果の保存はできません。",
+    "guestBannerMessage": "ゲストとして利用中です。クイズの追加や結果の保存はできません。",
+    "guestBannerSignIn": "Googleでログイン"
   }
 }

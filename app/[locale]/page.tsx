@@ -1,8 +1,10 @@
 import { BookOpen, ChevronRight, Clock3, FilePlus2, History, Sparkles, Trash2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { listQuizzes, deleteQuiz } from "@/app/actions/quiz";
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
+import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
 
 // quiz list changes on import/delete; avoid serving a stale build-time cache
@@ -10,11 +12,13 @@ export const dynamic = "force-dynamic";
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [quizzes, t, tNav] = await Promise.all([
+  const [quizzes, t, tNav, session] = await Promise.all([
     listQuizzes(),
     getTranslations("HomePage"),
     getTranslations("Nav"),
+    auth(),
   ]);
+  const canAddQuiz = Boolean(session?.user);
   return (
     <main className="min-h-screen bg-background">
       <header className="border-b bg-card/80">
@@ -40,11 +44,14 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               <History data-icon="inline-start" />
               <span className="hidden sm:inline">{tNav("pastResults")}</span>
             </Button>
-            <Button size="sm" nativeButton={false} render={<Link href="/import" />}>
-              <FilePlus2 data-icon="inline-start" />
-              <span className="hidden sm:inline">{tNav("addQuiz")}</span>
-            </Button>
+            {canAddQuiz && (
+              <Button size="sm" nativeButton={false} render={<Link href="/import" />}>
+                <FilePlus2 data-icon="inline-start" />
+                <span className="hidden sm:inline">{tNav("addQuiz")}</span>
+              </Button>
+            )}
             <DisplaySettings />
+            <UserMenu locale={locale} />
           </nav>
         </div>
       </header>
@@ -87,10 +94,12 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             <p className="text-sm font-semibold text-primary">{t("libraryLabel")}</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight">{t("libraryTitle")}</h2>
           </div>
-          <Button variant="outline" nativeButton={false} render={<Link href="/import" />}>
-            <FilePlus2 data-icon="inline-start" />
-            {t("addFromJson")}
-          </Button>
+          {canAddQuiz && (
+            <Button variant="outline" nativeButton={false} render={<Link href="/import" />}>
+              <FilePlus2 data-icon="inline-start" />
+              {t("addFromJson")}
+            </Button>
+          )}
         </div>
         <section className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {quizzes.map((quiz) => (

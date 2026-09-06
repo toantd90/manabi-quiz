@@ -3,15 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { and, count, desc, eq, isNull } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
-import { hasLocale } from "next-intl";
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { attempts, attemptAnswers, questions, quizzes, sampleQuiz } from "@/lib/db/schema";
 import { parseImportedQuiz, type Translate } from "@/lib/quiz-validation";
-import { routing } from "@/i18n/routing";
-
-function resolveLocale(locale: string) {
-  return hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
-}
+import { resolveLocale } from "@/i18n/routing";
 
 export async function listQuizzes() {
   try {
@@ -73,6 +69,8 @@ export async function getQuiz(id: string) {
 
 export async function importQuiz(locale: string, raw: string) {
   const t = await getTranslations({ locale: resolveLocale(locale), namespace: "Validation" });
+  const session = await auth();
+  if (!session?.user) return { ok: false, errors: [t("signInRequired")] };
   const parsed = parseImportedQuiz(raw, t as Translate);
   if (!parsed.data) return { ok: false, errors: parsed.errors };
   const quiz = parsed.data;
@@ -131,6 +129,8 @@ export async function submitAttempt(input: {
 }) {
   const quiz = await getQuiz(input.quizId);
   if (!quiz) throw new Error("Quiz not found");
+  const session = await auth();
+  const shouldSave = input.quizId !== "sample" && Boolean(session?.user);
   const scored = quiz.questions.map((question) => {
     const answer = input.answers.find((item) => item.questionId === question.id);
     const isCorrect = answer?.selectedAnswer === question.correctAnswer;
@@ -144,7 +144,7 @@ export async function submitAttempt(input: {
   const score = scored.reduce((sum, item) => sum + item.pointsEarned, 0);
   const maxScore = scored.reduce((sum, item) => sum + Number(item.question.points), 0);
   const correctCount = scored.filter((item) => item.isCorrect).length;
-  if (input.quizId !== "sample") {
+  if (shouldSave) {
     await db.transaction(async (tx) => {
       const [attempt] = await tx
         .insert(attempts)
@@ -182,5 +182,6 @@ export async function submitAttempt(input: {
     totalCount: scored.length,
     accuracy: scored.length ? Math.round((correctCount / scored.length) * 100) : 0,
     durationSeconds: input.durationSeconds,
+    saved: shouldSave,
   };
 }

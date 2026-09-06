@@ -11,7 +11,9 @@
     "backToList": "Quay lại danh sách câu đố",
     "kidsTheme": "Chuyển giao diện trẻ em",
     "kidsPalette": "Chọn màu cho trẻ em",
-    "displaySettings": "Cài đặt hiển thị"
+    "displaySettings": "Cài đặt hiển thị",
+    "signIn": "Đăng nhập bằng Google",
+    "signOut": "Đăng xuất"
   },
   "HomePage": {
     "heroLabel": "Thời gian học hôm nay",
@@ -47,7 +49,9 @@
     "clear": "Xóa",
     "errorsTitle": "Vui lòng kiểm tra lại thông tin nhập",
     "successMessage": "Đã lưu thành công.",
-    "viewList": "Xem danh sách"
+    "viewList": "Xem danh sách",
+    "signInRequiredTitle": "Cần đăng nhập để thêm câu đố",
+    "signInRequiredDescription": "Khách có thể xem và làm câu đố, nhưng chỉ người đã đăng nhập mới có thể thêm câu đố mới. Đăng nhập bằng Google để lưu câu đố vào thư viện."
   },
   "ResultsPage": {
     "title": "Kết quả trước đây",
@@ -95,7 +99,8 @@
     "reviewCorrectAnswer": "Đáp án đúng: {answer}",
     "reviewPrevious": "Trước",
     "reviewNext": "Sau",
-    "reviewCompleted": "Làm tốt lắm! Bạn đã xem lại tất cả các câu sai."
+    "reviewCompleted": "Làm tốt lắm! Bạn đã xem lại tất cả các câu sai.",
+    "notSavedNotice": "Bạn đang dùng ở chế độ khách nên kết quả này sẽ không được lưu. Đăng nhập bằng Google để lưu lại lịch sử học tập."
   },
   "Validation": {
     "required": "Vui lòng nhập giá trị",
@@ -107,6 +112,16 @@
     "unknownError": "Không thể xác thực câu đố",
     "saveFailed": "Không thể lưu. Vui lòng kiểm tra kết nối Neon.",
     "sampleCannotDelete": "Không thể xóa câu đố mẫu",
-    "issueMessage": "{path}: {message}"
+    "issueMessage": "{path}: {message}",
+    "signInRequired": "Đăng nhập bằng Google để thêm câu đố."
+  },
+  "AuthGate": {
+    "title": "Chào mừng đến với Manabi Quiz",
+    "description": "Đăng nhập bằng Google để thêm câu đố và lưu kết quả của bạn. Bạn cũng có thể tiếp tục mà không cần đăng nhập, nhưng sẽ không thể thêm câu đố và kết quả sẽ không được lưu.",
+    "signInCta": "Đăng nhập bằng Google",
+    "continueGuestCta": "Tiếp tục không đăng nhập",
+    "guestWarning": "Khách không thể thêm câu đố và kết quả sẽ không được lưu.",
+    "guestBannerMessage": "Đang dùng ở chế độ khách — không thể thêm câu đố và kết quả sẽ không được lưu.",
+    "guestBannerSignIn": "Đăng nhập bằng Google"
   }
 }

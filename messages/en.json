@@ -11,7 +11,9 @@
     "backToList": "Back to quiz list",
     "kidsTheme": "Toggle kids theme",
     "kidsPalette": "Pick a kids color",
-    "displaySettings": "Display settings"
+    "displaySettings": "Display settings",
+    "signIn": "Sign in with Google",
+    "signOut": "Sign out"
   },
   "HomePage": {
     "heroLabel": "Today's learning time",
@@ -47,7 +49,9 @@
     "clear": "Clear",
     "errorsTitle": "Please check your input",
     "successMessage": "Saved successfully.",
-    "viewList": "View the list"
+    "viewList": "View the list",
+    "signInRequiredTitle": "Sign in to add a quiz",
+    "signInRequiredDescription": "Guests can browse and take quizzes, but only signed-in users can add new ones. Sign in with Google to save quizzes to the library."
   },
   "ResultsPage": {
     "title": "Past results",
@@ -95,7 +99,8 @@
     "reviewCorrectAnswer": "Correct answer: {answer}",
     "reviewPrevious": "Previous",
     "reviewNext": "Next",
-    "reviewCompleted": "Great job! You've reviewed all your mistakes."
+    "reviewCompleted": "Great job! You've reviewed all your mistakes.",
+    "notSavedNotice": "You're browsing as a guest, so this result wasn't saved. Sign in with Google to keep your history."
   },
   "Validation": {
     "required": "Please enter a value",
@@ -107,6 +112,16 @@
     "unknownError": "Could not verify the quiz",
     "saveFailed": "Could not save. Please check your Neon connection.",
     "sampleCannotDelete": "The sample quiz cannot be deleted",
-    "issueMessage": "{path}: {message}"
+    "issueMessage": "{path}: {message}",
+    "signInRequired": "Sign in with Google to add a quiz."
+  },
+  "AuthGate": {
+    "title": "Welcome to Manabi Quiz",
+    "description": "Sign in with Google to add quizzes and save your results. You can also continue without signing in, but you won't be able to add quizzes and your results won't be saved.",
+    "signInCta": "Sign in with Google",
+    "continueGuestCta": "Continue without signing in",
+    "guestWarning": "Guests can't add quizzes, and results aren't saved.",
+    "guestBannerMessage": "Browsing as a guest \u2014 quizzes can't be added and results won't be saved.",
+    "guestBannerSignIn": "Sign in with Google"
   }
 }

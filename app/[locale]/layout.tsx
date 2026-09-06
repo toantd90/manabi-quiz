@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import { AuthGate } from "@/components/auth-gate";
 import { routing } from "@/i18n/routing";
 import { THEME_COOKIE, resolveTheme, KIDS_PALETTE_COOKIE, resolveKidsPalette } from "@/lib/theme";
 import { cn } from "@/lib/utils";
@@ -60,7 +61,7 @@ export default async function RootLayout({
     >
       <body className={cn(kidsFont.variable, "antialiased")}>
         <NextIntlClientProvider>
-          {children}
+          <AuthGate locale={locale}>{children}</AuthGate>
           {process.env.NODE_ENV === "production" && <Analytics />}
         </NextIntlClientProvider>
       </body>
