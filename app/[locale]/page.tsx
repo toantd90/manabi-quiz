@@ -1,22 +1,10 @@
-import {
-  BookOpen,
-  ChevronRight,
-  Clock3,
-  FilePlus2,
-  History,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
+import { BookOpen, ChevronRight, Clock3, FilePlus2, History, Sparkles, Trash2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { listQuizzes, deleteQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const [quizzes, t, tNav] = await Promise.all([
     listQuizzes(),
@@ -32,12 +20,8 @@ export default async function Page({
               <Sparkles data-icon="inline-start" />
             </span>
             <span>
-              <span className="block text-sm font-bold tracking-wide">
-                {tNav("brandName")}
-              </span>
-              <span className="block text-xs text-muted-foreground">
-                {tNav("brandTagline")}
-              </span>
+              <span className="block text-sm font-bold tracking-wide">{tNav("brandName")}</span>
+              <span className="block text-xs text-muted-foreground">{tNav("brandTagline")}</span>
             </span>
           </Link>
           <nav className="flex items-center gap-2">
@@ -50,11 +34,7 @@ export default async function Page({
               <History data-icon="inline-start" />
               {tNav("pastResults")}
             </Button>
-            <Button
-              size="sm"
-              nativeButton={false}
-              render={<Link href="/import" />}
-            >
+            <Button size="sm" nativeButton={false} render={<Link href="/import" />}>
               <FilePlus2 data-icon="inline-start" />
               {tNav("addQuiz")}
             </Button>
@@ -64,23 +44,17 @@ export default async function Page({
       <div className="mx-auto max-w-6xl px-5 py-10">
         <section className="grid gap-8 rounded-[2rem] bg-primary p-7 text-primary-foreground shadow-sm md:grid-cols-[1.3fr_.7fr] md:p-10">
           <div>
-            <p className="text-sm font-semibold opacity-80">
-              {t("heroLabel")}
-            </p>
+            <p className="text-sm font-semibold opacity-80">{t("heroLabel")}</p>
             <h1 className="mt-3 max-w-xl text-balance text-3xl font-bold leading-tight sm:text-5xl">
               {t("heroTitleLine1")}
               <br />
               {t("heroTitleLine2")}
             </h1>
-            <p className="mt-5 max-w-lg text-sm leading-6 opacity-85">
-              {t("heroDescription")}
-            </p>
+            <p className="mt-5 max-w-lg text-sm leading-6 opacity-85">{t("heroDescription")}</p>
             <Button
               className="mt-7 bg-background text-foreground hover:bg-background/90"
               nativeButton={false}
-              render={
-                <Link href={quizzes[0] ? `/quiz/${quizzes[0].id}` : "/import"} />
-              }
+              render={<Link href={quizzes[0] ? `/quiz/${quizzes[0].id}` : "/import"} />}
             >
               {t("startCta")}
               <ChevronRight data-icon="inline-end" />
@@ -103,18 +77,10 @@ export default async function Page({
         </section>
         <div className="mt-12 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-primary">
-              {t("libraryLabel")}
-            </p>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight">
-              {t("libraryTitle")}
-            </h2>
+            <p className="text-sm font-semibold text-primary">{t("libraryLabel")}</p>
+            <h2 className="mt-1 text-2xl font-bold tracking-tight">{t("libraryTitle")}</h2>
           </div>
-          <Button
-            variant="outline"
-            nativeButton={false}
-            render={<Link href="/import" />}
-          >
+          <Button variant="outline" nativeButton={false} render={<Link href="/import" />}>
             <FilePlus2 data-icon="inline-start" />
             {t("addFromJson")}
           </Button>
@@ -145,9 +111,7 @@ export default async function Page({
                   </form>
                 )}
               </div>
-              <h3 className="mt-5 text-xl font-bold leading-snug">
-                {quiz.title}
-              </h3>
+              <h3 className="mt-5 text-xl font-bold leading-snug">{quiz.title}</h3>
               <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
                 {quiz.description}
               </p>

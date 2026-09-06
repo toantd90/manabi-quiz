@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft, CheckCircle2, CircleAlert, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
@@ -26,47 +26,32 @@ type Quiz = {
 export function QuizSession({ quiz }: { quiz: Quiz }) {
   const t = useTranslations("QuizSession");
   const tNav = useTranslations("Nav");
-  const questions = useMemo(
-    () =>
-      [...quiz.questions]
-        .sort(() => Math.random() - 0.5)
-        .map((q) => ({
-          ...q,
-          choices: [...q.choices].sort(() => Math.random() - 0.5),
-        })),
-    [quiz.questions],
+  const [questions] = useState(() =>
+    [...quiz.questions]
+      .sort(() => Math.random() - 0.5)
+      .map((q) => ({
+        ...q,
+        choices: [...q.choices].sort(() => Math.random() - 0.5),
+      })),
   );
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
-  const [answers, setAnswers] = useState<
-    { questionId: string; selectedAnswer: string }[]
-  >([]);
-  const [result, setResult] = useState<Awaited<
-    ReturnType<typeof submitAttempt>
-  > | null>(null);
+  const [answers, setAnswers] = useState<{ questionId: string; selectedAnswer: string }[]>([]);
+  const [result, setResult] = useState<Awaited<ReturnType<typeof submitAttempt>> | null>(null);
   const current = questions[index];
   if (result)
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm text-muted-foreground"
-        >
+        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
         <section className="rounded-[2rem] border bg-card p-8 shadow-sm">
-          <p className="text-sm font-semibold text-primary">
-            {t("completedLabel")}
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight">
-            {result.quiz.title}
-          </h1>
+          <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight">{result.quiz.title}</h1>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl bg-secondary p-5">
-              <p className="text-sm text-muted-foreground">
-                {t("scoreLabel")}
-              </p>
+              <p className="text-sm text-muted-foreground">{t("scoreLabel")}</p>
               <p className="mt-1 text-3xl font-bold">
                 {t("scoreValue", {
                   score: result.score,
@@ -75,17 +60,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               </p>
             </div>
             <div className="rounded-2xl bg-secondary p-5">
-              <p className="text-sm text-muted-foreground">
-                {t("correctCountLabel")}
-              </p>
+              <p className="text-sm text-muted-foreground">{t("correctCountLabel")}</p>
               <p className="mt-1 text-3xl font-bold">
                 {t("correctCountValue", { count: result.correctCount })}
               </p>
             </div>
             <div className="rounded-2xl bg-secondary p-5">
-              <p className="text-sm text-muted-foreground">
-                {t("accuracyLabel")}
-              </p>
+              <p className="text-sm text-muted-foreground">{t("accuracyLabel")}</p>
               <p className="mt-1 text-3xl font-bold">
                 {t("accuracyValue", { value: result.accuracy })}
               </p>
@@ -96,33 +77,20 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               <RotateCcw data-icon="inline-start" />
               {t("retry")}
             </Button>
-            <Button
-              variant="outline"
-              nativeButton={false}
-              render={<Link href="/" />}
-            >
+            <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
               {t("backToListButton")}
             </Button>
           </div>
         </section>
         <section className="flex flex-col gap-3">
           {result.scored.map((item, i) => (
-            <article
-              key={item.question.id}
-              className="rounded-2xl border bg-card p-5"
-            >
+            <article key={item.question.id} className="rounded-2xl border bg-card p-5">
               <div className="flex items-start gap-3">
                 <span className="mt-0.5">
                   {item.isCorrect ? (
-                    <CheckCircle2
-                      className="text-primary"
-                      aria-label={t("correctAria")}
-                    />
+                    <CheckCircle2 className="text-primary" aria-label={t("correctAria")} />
                   ) : (
-                    <CircleAlert
-                      className="text-destructive"
-                      aria-label={t("incorrectAria")}
-                    />
+                    <CircleAlert className="text-destructive" aria-label={t("incorrectAria")} />
                   )}
                 </span>
                 <div>
@@ -135,9 +103,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
                       correctAnswer: item.question.correctAnswer,
                     })}
                   </p>
-                  <p className="mt-2 text-sm leading-6">
-                    {item.question.explanation}
-                  </p>
+                  <p className="mt-2 text-sm leading-6">{item.question.explanation}</p>
                 </div>
               </div>
             </article>
@@ -147,10 +113,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     );
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
-      <Link
-        href="/"
-        className="flex items-center gap-2 text-sm text-muted-foreground"
-      >
+      <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
         <ArrowLeft data-icon="inline-start" />
         {tNav("backToList")}
       </Link>
@@ -173,9 +136,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
       </div>
       <section className="rounded-[2rem] border bg-card p-6 shadow-sm sm:p-10">
         <p className="text-sm text-muted-foreground">{quiz.title}</p>
-        <h1 className="mt-4 text-2xl font-bold leading-relaxed sm:text-3xl">
-          {current.question}
-        </h1>
+        <h1 className="mt-4 text-2xl font-bold leading-relaxed sm:text-3xl">{current.question}</h1>
         <div className="mt-8 flex flex-col gap-3">
           {current.choices.map((choice, choiceIndex) => (
             <button
@@ -197,9 +158,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             className={`mt-6 rounded-2xl border p-5 ${selected === current.correctAnswer ? "bg-primary/10" : "bg-destructive/10"}`}
           >
             <p className="font-bold">
-              {selected === current.correctAnswer
-                ? t("correctFeedback")
-                : t("incorrectFeedback")}
+              {selected === current.correctAnswer ? t("correctFeedback") : t("incorrectFeedback")}
             </p>
             <p className="mt-2 text-sm leading-6">
               {t("correctAnswerPrefix", { correctAnswer: current.correctAnswer })}
@@ -217,14 +176,9 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           className="mt-6 w-full"
           disabled={!selected}
           onClick={async () => {
-            const next = [
-              ...answers,
-              { questionId: current.id, selectedAnswer: selected! },
-            ];
+            const next = [...answers, { questionId: current.id, selectedAnswer: selected! }];
             if (index === questions.length - 1)
-              setResult(
-                await submitAttempt({ quizId: quiz.id, answers: next }),
-              );
+              setResult(await submitAttempt({ quizId: quiz.id, answers: next }));
             else {
               setAnswers(next);
               setSelected(null);

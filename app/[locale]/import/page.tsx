@@ -21,10 +21,7 @@ export default function ImportPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm text-muted-foreground"
-        >
+        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
@@ -34,17 +31,11 @@ export default function ImportPage() {
               <FileJson data-icon="inline-start" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-primary">
-                {t("audienceLabel")}
-              </p>
-              <h1 className="text-3xl font-bold tracking-tight">
-                {t("title")}
-              </h1>
+              <p className="text-sm font-semibold text-primary">{t("audienceLabel")}</p>
+              <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
             </div>
           </div>
-          <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
-            {t("description")}
-          </p>
+          <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">{t("description")}</p>
         </div>
         <section className="mt-8 rounded-3xl border bg-card p-5 shadow-sm sm:p-7">
           <label htmlFor="quiz-json" className="text-sm font-semibold">
@@ -106,4 +97,3 @@ export default function ImportPage() {
     </main>
   );
 }
-

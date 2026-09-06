@@ -18,10 +18,7 @@ export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm text-muted-foreground"
-        >
+        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
@@ -34,11 +31,7 @@ export default async function ResultsPage() {
             <p className="mx-auto mt-3 max-w-md leading-7 text-muted-foreground">
               {t("description")}
             </p>
-            <Button
-              className="mt-6"
-              nativeButton={false}
-              render={<Link href="/" />}
-            >
+            <Button className="mt-6" nativeButton={false} render={<Link href="/" />}>
               {t("browseQuizzes")}
             </Button>
           </section>
@@ -47,14 +40,9 @@ export default async function ResultsPage() {
             <h1 className="text-2xl font-bold">{t("title")}</h1>
             <ul className="mt-6 flex flex-col gap-4">
               {attempts.map((attempt) => (
-                <li
-                  key={attempt.id}
-                  className="rounded-3xl border bg-card p-6 shadow-sm"
-                >
+                <li key={attempt.id} className="rounded-3xl border bg-card p-6 shadow-sm">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h2 className="text-lg font-bold leading-snug">
-                      {attempt.quizTitleSnapshot}
-                    </h2>
+                    <h2 className="text-lg font-bold leading-snug">{attempt.quizTitleSnapshot}</h2>
                     <Link
                       href={`/quiz/${attempt.quizId}`}
                       className="text-sm font-semibold text-primary"
@@ -89,5 +77,3 @@ export default async function ResultsPage() {
     </main>
   );
 }
-
-

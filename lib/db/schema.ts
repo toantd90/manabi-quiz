@@ -18,9 +18,7 @@ export const quizzes = pgTable("quizzes", {
   description: text("description"),
   sourceNote: text("source_note"),
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const questions = pgTable("questions", {
@@ -30,18 +28,14 @@ export const questions = pgTable("questions", {
   choices: jsonb("choices").$type<string[]>().notNull(),
   correctAnswer: text("correct_answer").notNull(),
   explanation: text("explanation").notNull(),
-  wrongChoiceExplanations: jsonb("wrong_choice_explanations").$type<
-    Record<string, string>
-  >(),
+  wrongChoiceExplanations: jsonb("wrong_choice_explanations").$type<Record<string, string>>(),
   memoryTip: text("memory_tip"),
   hint: text("hint"),
   difficulty: text("difficulty"),
   topic: text("topic"),
   points: numeric("points").notNull().default("0"),
   sourceNote: text("source_note"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const attempts = pgTable("attempts", {
@@ -54,12 +48,8 @@ export const attempts = pgTable("attempts", {
   incorrectCount: integer("incorrect_count").notNull().default(0),
   totalCount: integer("total_count").notNull().default(0),
   accuracy: numeric("accuracy").notNull().default("0"),
-  startedAt: timestamp("started_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  completedAt: timestamp("completed_at", { withTimezone: true })
-    .defaultNow()
-    .notNull(),
+  startedAt: timestamp("started_at", { withTimezone: true }).defaultNow().notNull(),
+  completedAt: timestamp("completed_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const attemptAnswers = pgTable("attempt_answers", {
