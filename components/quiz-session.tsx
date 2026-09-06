@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, CheckCircle2, CircleAlert, Clock, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
@@ -50,6 +50,21 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   const totalSeconds = questions.length * SECONDS_PER_QUESTION;
   const [timeLeft, setTimeLeft] = useState(totalSeconds);
   const current = questions[index];
+  const [reviewMode, setReviewMode] = useState(false);
+  const [reviewIndex, setReviewIndex] = useState(0);
+  const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
+  const mistakes = useMemo(
+    () => (result ? result.scored.filter((item) => !item.isCorrect) : []),
+    [result],
+  );
+
+  // marks the mistake currently shown in review mode as reviewed
+  useEffect(() => {
+    if (!reviewMode) return;
+    const questionId = mistakes[reviewIndex]?.question.id;
+    if (!questionId || reviewedIds.has(questionId)) return;
+    setReviewedIds((prev) => new Set(prev).add(questionId));
+  }, [reviewMode, reviewIndex, mistakes, reviewedIds]);
 
   useEffect(() => {
     if (result || timeLeft <= 0) return;
@@ -68,6 +83,87 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, result]);
 
+  if (result && reviewMode) {
+    const total = mistakes.length;
+    const reviewedCount = reviewedIds.size;
+    const currentMistake = mistakes[reviewIndex];
+    return (
+      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
+        <div className="flex items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={() => setReviewMode(false)}
+            className="flex items-center gap-2 text-sm text-muted-foreground"
+          >
+            <ArrowLeft data-icon="inline-start" />
+            {t("reviewBack")}
+          </button>
+          <LanguageSwitcher />
+        </div>
+        <div>
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-semibold text-primary">{t("reviewTitle")}</span>
+            <span className="text-muted-foreground">
+              {t("reviewQuestionCounter", { current: reviewIndex + 1, total })}
+            </span>
+          </div>
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-secondary">
+            <div
+              className="h-full rounded-full bg-primary transition-all"
+              style={{ width: `${total ? (reviewedCount / total) * 100 : 0}%` }}
+            />
+          </div>
+          <p className="mt-2 text-sm font-semibold text-muted-foreground">
+            {t("reviewProgress", { reviewed: reviewedCount, total })}
+          </p>
+        </div>
+        {reviewedCount === total && total > 0 && (
+          <div className="rounded-2xl border bg-primary/10 p-5 text-center font-bold text-primary">
+            {t("reviewCompleted")}
+          </div>
+        )}
+        {currentMistake && (
+          <section className="rounded-[2rem] border bg-card p-6 shadow-sm sm:p-10">
+            <p className="text-sm text-muted-foreground">{quiz.title}</p>
+            <h1 className="mt-4 text-2xl font-bold leading-relaxed sm:text-3xl">
+              {currentMistake.question.question}
+            </h1>
+            <div className="mt-6 rounded-2xl border bg-destructive/10 p-5">
+              <p className="font-bold">
+                {t("reviewYourAnswer", { answer: currentMistake.selectedAnswer || "-" })}
+              </p>
+            </div>
+            <div className="mt-3 rounded-2xl border bg-primary/10 p-5">
+              <p className="font-bold">
+                {t("reviewCorrectAnswer", { answer: currentMistake.question.correctAnswer })}
+              </p>
+              <p className="mt-2 text-sm leading-6">{currentMistake.question.explanation}</p>
+              {currentMistake.question.memoryTip && (
+                <p className="mt-3 text-sm font-semibold">
+                  {t("memoryTip", { tip: currentMistake.question.memoryTip })}
+                </p>
+              )}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button
+                variant="outline"
+                disabled={reviewIndex === 0}
+                onClick={() => setReviewIndex((i) => Math.max(0, i - 1))}
+              >
+                {t("reviewPrevious")}
+              </Button>
+              <Button
+                disabled={reviewIndex === total - 1}
+                onClick={() => setReviewIndex((i) => Math.min(total - 1, i + 1))}
+              >
+                {t("reviewNext")}
+              </Button>
+            </div>
+          </section>
+        )}
+      </main>
+    );
+  }
   if (result)
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
@@ -113,6 +209,17 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               <RotateCcw data-icon="inline-start" />
               {t("retry")}
             </Button>
+            {mistakes.length > 0 && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setReviewIndex(0);
+                  setReviewMode(true);
+                }}
+              >
+                {t("reviewMistakesButton", { count: mistakes.length })}
+              </Button>
+            )}
             <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
               {t("backToListButton")}
             </Button>

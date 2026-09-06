@@ -74,7 +74,17 @@
     "correctAnswerPrefix": "Correct answer: {correctAnswer}",
     "memoryTip": "Memory tip: {tip}",
     "nextQuestion": "Next question",
-    "viewResults": "View results"
+    "viewResults": "View results",
+    "reviewMistakesButton": "Review mistakes ({count})",
+    "reviewBack": "Back to results",
+    "reviewTitle": "Mistake review",
+    "reviewProgress": "{reviewed} / {total} reviewed",
+    "reviewQuestionCounter": "{current} / {total}",
+    "reviewYourAnswer": "Your answer: {answer}",
+    "reviewCorrectAnswer": "Correct answer: {answer}",
+    "reviewPrevious": "Previous",
+    "reviewNext": "Next",
+    "reviewCompleted": "Great job! You've reviewed all your mistakes."
   },
   "Validation": {
     "required": "Please enter a value",

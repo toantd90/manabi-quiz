@@ -74,7 +74,17 @@
     "correctAnswerPrefix": "正解：{correctAnswer}",
     "memoryTip": "覚え方：{tip}",
     "nextQuestion": "次の問題へ",
-    "viewResults": "結果を見る"
+    "viewResults": "結果を見る",
+    "reviewMistakesButton": "間違えた問題を復習（{count}問）",
+    "reviewBack": "結果に戻る",
+    "reviewTitle": "間違い直し",
+    "reviewProgress": "{reviewed} / {total} 確認済み",
+    "reviewQuestionCounter": "{current} / {total}",
+    "reviewYourAnswer": "あなたの答え：{answer}",
+    "reviewCorrectAnswer": "正解：{answer}",
+    "reviewPrevious": "前へ",
+    "reviewNext": "次へ",
+    "reviewCompleted": "よくできました！すべての間違いを確認しました。"
   },
   "Validation": {
     "required": "入力してください",
