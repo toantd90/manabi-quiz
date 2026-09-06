@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, FileJson, Upload } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { importQuiz } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
 import { sampleQuiz } from "@/lib/db/schema";
 
@@ -21,10 +22,13 @@ export default function ImportPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
-          <ArrowLeft data-icon="inline-start" />
-          {tNav("backToList")}
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <ArrowLeft data-icon="inline-start" />
+            {tNav("backToList")}
+          </Link>
+          <LanguageSwitcher />
+        </div>
         <div className="mt-10">
           <div className="flex items-center gap-3">
             <span className="flex size-11 items-center justify-center rounded-2xl bg-secondary">

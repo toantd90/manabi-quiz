@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, CircleAlert, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
 
 type Question = {
@@ -42,10 +43,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   if (result)
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
-        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
-          <ArrowLeft data-icon="inline-start" />
-          {tNav("backToList")}
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <ArrowLeft data-icon="inline-start" />
+            {tNav("backToList")}
+          </Link>
+          <LanguageSwitcher />
+        </div>
         <section className="rounded-[2rem] border bg-card p-8 shadow-sm">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight">{result.quiz.title}</h1>
@@ -113,10 +117,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     );
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
-      <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
-        <ArrowLeft data-icon="inline-start" />
-        {tNav("backToList")}
-      </Link>
+      <div className="flex items-center justify-between gap-4">
+        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+          <ArrowLeft data-icon="inline-start" />
+          {tNav("backToList")}
+        </Link>
+        <LanguageSwitcher />
+      </div>
       <div>
         <div className="flex items-center justify-between text-sm">
           <span className="font-semibold text-primary">{quiz.subject}</span>

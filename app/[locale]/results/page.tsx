@@ -2,6 +2,7 @@ import { ArrowLeft, History } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { listAttempts } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { ResultsFilter } from "@/components/results-filter";
 import { Link } from "@/i18n/navigation";
 
@@ -15,10 +16,13 @@ export default async function ResultsPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
-          <ArrowLeft data-icon="inline-start" />
-          {tNav("backToList")}
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <ArrowLeft data-icon="inline-start" />
+            {tNav("backToList")}
+          </Link>
+          <LanguageSwitcher />
+        </div>
         {attempts.length === 0 ? (
           <section className="mt-10 rounded-[2rem] border bg-card p-8 text-center shadow-sm">
             <span className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-secondary">
