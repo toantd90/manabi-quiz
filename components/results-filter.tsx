@@ -15,11 +15,18 @@ type Attempt = {
   correctCount: number;
   totalCount: number;
   accuracy: string;
+  durationSeconds: number;
   completedAt: Date | string;
 };
 
 const PASS_THRESHOLD = 80;
 type StatusFilter = "all" | "passed" | "needsReview";
+
+function formatDuration(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
 
 export function ResultsFilter({ attempts, locale }: { attempts: Attempt[]; locale: string }) {
   const t = useTranslations("ResultsPage");
@@ -103,6 +110,7 @@ export function ResultsFilter({ attempts, locale }: { attempts: Attempt[]; local
                 >
                   {t("accuracyValue", { value: attempt.accuracy })}
                 </span>
+                <span>{t("durationValue", { time: formatDuration(attempt.durationSeconds) })}</span>
               </div>
             </li>
           ))}

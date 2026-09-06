@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeft, CheckCircle2, CircleAlert, RotateCcw } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, CheckCircle2, CircleAlert, Clock, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
+
+const SECONDS_PER_QUESTION = 60;
+
+function formatTime(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
 
 type Question = {
   id: string;
@@ -39,7 +47,27 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [answers, setAnswers] = useState<{ questionId: string; selectedAnswer: string }[]>([]);
   const [result, setResult] = useState<Awaited<ReturnType<typeof submitAttempt>> | null>(null);
+  const totalSeconds = questions.length * SECONDS_PER_QUESTION;
+  const [timeLeft, setTimeLeft] = useState(totalSeconds);
   const current = questions[index];
+
+  useEffect(() => {
+    if (result || timeLeft <= 0) return;
+    const timer = setInterval(() => setTimeLeft((prev) => Math.max(0, prev - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [result, timeLeft]);
+
+  useEffect(() => {
+    if (result || timeLeft > 0) return;
+    const finalAnswers = selected ? [...answers, { questionId: current.id, selectedAnswer: selected }] : answers;
+    void submitAttempt({
+      quizId: quiz.id,
+      answers: finalAnswers,
+      durationSeconds: totalSeconds,
+    }).then(setResult);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft, result]);
+
   if (result)
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-5 py-10">
@@ -53,7 +81,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         <section className="rounded-[2rem] border bg-card p-8 shadow-sm">
           <p className="text-sm font-semibold text-primary">{t("completedLabel")}</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight">{result.quiz.title}</h1>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl bg-secondary p-5">
               <p className="text-sm text-muted-foreground">{t("scoreLabel")}</p>
               <p className="mt-1 text-3xl font-bold">
@@ -74,6 +102,10 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
               <p className="mt-1 text-3xl font-bold">
                 {t("accuracyValue", { value: result.accuracy })}
               </p>
+            </div>
+            <div className="rounded-2xl bg-secondary p-5">
+              <p className="text-sm text-muted-foreground">{t("durationLabel")}</p>
+              <p className="mt-1 text-3xl font-bold">{formatTime(result.durationSeconds)}</p>
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -127,6 +159,12 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
       <div>
         <div className="flex items-center justify-between text-sm">
           <span className="font-semibold text-primary">{quiz.subject}</span>
+          <span
+            className={`flex items-center gap-1.5 font-semibold ${timeLeft <= 30 ? "text-destructive" : "text-muted-foreground"}`}
+          >
+            <Clock className="size-4" />
+            {t("timeLeft", { time: formatTime(timeLeft) })}
+          </span>
           <span className="text-muted-foreground">
             {t("questionCounter", {
               current: index + 1,
@@ -185,7 +223,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           onClick={async () => {
             const next = [...answers, { questionId: current.id, selectedAnswer: selected! }];
             if (index === questions.length - 1)
-              setResult(await submitAttempt({ quizId: quiz.id, answers: next }));
+              setResult(
+                await submitAttempt({
+                  quizId: quiz.id,
+                  answers: next,
+                  durationSeconds: totalSeconds - timeLeft,
+                }),
+              );
             else {
               setAnswers(next);
               setSelected(null);

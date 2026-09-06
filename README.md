@@ -9,12 +9,13 @@ Parents can import quizzes as JSON, while children can take randomized quizzes, 
 - Quiz dashboard with available quizzes
 - Bilingual UI (Japanese and English) via locale-prefixed routes
 - Randomized question and answer order
+- Per-quiz countdown timer (1 minute per question) with auto-submit on timeout
 - Immediate answer feedback
 - Explanations, hints, and memory tips
 - JSON quiz import with validation
 - Transactional persistence in Neon PostgreSQL
 - Server-authoritative scoring
-- Attempt and answer history tables
+- Attempt and answer history tables, including time taken per attempt
 - Soft deletion for imported quizzes
 - Built-in sample quiz for preview and development
 - Responsive, accessible UI
@@ -48,7 +49,8 @@ app/
   globals.css                 Global styles and design tokens
 
 components/
-  quiz-session.tsx       Interactive quiz client component
+  quiz-session.tsx       Interactive quiz client component with timer
+  results-filter.tsx     Past results search, filter, and duration display
   ui/button.tsx          Shared button component
 
 lib/

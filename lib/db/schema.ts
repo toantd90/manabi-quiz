@@ -48,6 +48,7 @@ export const attempts = pgTable("attempts", {
   incorrectCount: integer("incorrect_count").notNull().default(0),
   totalCount: integer("total_count").notNull().default(0),
   accuracy: numeric("accuracy").notNull().default("0"),
+  durationSeconds: integer("duration_seconds").notNull().default(0),
   startedAt: timestamp("started_at", { withTimezone: true }).defaultNow().notNull(),
   completedAt: timestamp("completed_at", { withTimezone: true }).defaultNow().notNull(),
 });

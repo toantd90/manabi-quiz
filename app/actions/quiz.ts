@@ -125,6 +125,7 @@ export async function deleteQuiz(locale: string, id: string) {
 export async function submitAttempt(input: {
   quizId: string;
   answers: { questionId: string; selectedAnswer: string }[];
+  durationSeconds: number;
 }) {
   const quiz = await getQuiz(input.quizId);
   if (!quiz) throw new Error("Quiz not found");
@@ -154,6 +155,7 @@ export async function submitAttempt(input: {
           incorrectCount: scored.length - correctCount,
           totalCount: scored.length,
           accuracy: String(scored.length ? Math.round((correctCount / scored.length) * 100) : 0),
+          durationSeconds: input.durationSeconds,
         })
         .returning({ id: attempts.id });
       await tx.insert(attemptAnswers).values(
@@ -177,5 +179,6 @@ export async function submitAttempt(input: {
     incorrectCount: scored.length - correctCount,
     totalCount: scored.length,
     accuracy: scored.length ? Math.round((correctCount / scored.length) * 100) : 0,
+    durationSeconds: input.durationSeconds,
   };
 }
