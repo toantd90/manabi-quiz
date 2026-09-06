@@ -45,7 +45,12 @@
     "retryQuiz": "もう一度挑戦",
     "scoreValue": "{score} / {maxScore}点",
     "correctCountValue": "{count} / {total}問正解",
-    "accuracyValue": "正答率{value}%"
+    "accuracyValue": "正答率{value}%",
+    "searchPlaceholder": "クイズ名で検索",
+    "statusAll": "すべての結果",
+    "statusPassed": "合格",
+    "statusNeedsReview": "要復習",
+    "noFilterResults": "条件に一致する結果がありません。"
   },
   "QuizSession": {
     "completedLabel": "クイズ完了",

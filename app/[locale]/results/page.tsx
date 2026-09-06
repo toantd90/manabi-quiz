@@ -2,6 +2,7 @@ import { ArrowLeft, History } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { listAttempts } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
+import { ResultsFilter } from "@/components/results-filter";
 import { Link } from "@/i18n/navigation";
 
 export default async function ResultsPage() {
@@ -11,10 +12,6 @@ export default async function ResultsPage() {
     getLocale(),
     listAttempts(),
   ]);
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 py-10">
@@ -38,39 +35,7 @@ export default async function ResultsPage() {
         ) : (
           <section className="mt-10">
             <h1 className="text-2xl font-bold">{t("title")}</h1>
-            <ul className="mt-6 flex flex-col gap-4">
-              {attempts.map((attempt) => (
-                <li key={attempt.id} className="rounded-3xl border bg-card p-6 shadow-sm">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h2 className="text-lg font-bold leading-snug">{attempt.quizTitleSnapshot}</h2>
-                    <Link
-                      href={`/quiz/${attempt.quizId}`}
-                      className="text-sm font-semibold text-primary"
-                    >
-                      {t("retryQuiz")}
-                    </Link>
-                  </div>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {dateFormatter.format(new Date(attempt.completedAt))}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-6 text-sm">
-                    <span>
-                      {t("scoreValue", {
-                        score: attempt.score,
-                        maxScore: attempt.maxScore,
-                      })}
-                    </span>
-                    <span>
-                      {t("correctCountValue", {
-                        count: attempt.correctCount,
-                        total: attempt.totalCount,
-                      })}
-                    </span>
-                    <span>{t("accuracyValue", { value: attempt.accuracy })}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <ResultsFilter attempts={attempts} locale={locale} />
           </section>
         )}
       </div>

@@ -45,7 +45,12 @@
     "retryQuiz": "Try again",
     "scoreValue": "{score} / {maxScore} pts",
     "correctCountValue": "{count} / {total} correct",
-    "accuracyValue": "{value}% accuracy"
+    "accuracyValue": "{value}% accuracy",
+    "searchPlaceholder": "Search by quiz title",
+    "statusAll": "All results",
+    "statusPassed": "Passed",
+    "statusNeedsReview": "Needs review",
+    "noFilterResults": "No results match your filter."
   },
   "QuizSession": {
     "completedLabel": "Quiz completed",
