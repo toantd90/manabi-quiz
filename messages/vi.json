@@ -27,6 +27,9 @@
     "libraryLabel": "Thư viện câu đố",
     "libraryTitle": "Câu đố để thử sức",
     "addFromJson": "Thêm từ JSON",
+    "filterAll": "Tất cả câu đố",
+    "filterMine": "Câu đố của tôi",
+    "noMineQuizzes": "Bạn chưa thêm câu đố nào.",
     "deleteAria": "Xóa {title}",
     "questionCount": "{count} câu hỏi",
     "startQuiz": "Bắt đầu"
@@ -112,6 +115,7 @@
     "unknownError": "Không thể xác thực câu đố",
     "saveFailed": "Không thể lưu. Vui lòng kiểm tra kết nối Neon.",
     "sampleCannotDelete": "Không thể xóa câu đố mẫu",
+    "notOwnerCannotDelete": "Chỉ người đã thêm câu đố này mới có thể xóa",
     "issueMessage": "{path}: {message}",
     "signInRequired": "Đăng nhập bằng Google để thêm câu đố."
   },

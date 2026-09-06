@@ -1,9 +1,10 @@
-import { BookOpen, ChevronRight, Clock3, FilePlus2, History, Sparkles, Trash2 } from "lucide-react";
+import { BookOpen, ChevronRight, FilePlus2, History, Sparkles } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { listQuizzes, deleteQuiz } from "@/app/actions/quiz";
+import { listQuizzes } from "@/app/actions/quiz";
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
+import { QuizLibrary } from "@/components/quiz-library";
 import { UserMenu } from "@/components/user-menu";
 import { Link } from "@/i18n/navigation";
 
@@ -101,55 +102,11 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             </Button>
           )}
         </div>
-        <section className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {quizzes.map((quiz) => (
-            <article
-              key={quiz.id}
-              className="group flex flex-col rounded-3xl border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold">
-                  {quiz.subject}
-                </span>
-                {quiz.id !== "sample" && (
-                  <form
-                    action={async () => {
-                      "use server";
-                      await deleteQuiz(locale, quiz.id);
-                    }}
-                  >
-                    <button
-                      aria-label={t("deleteAria", { title: quiz.title })}
-                      className="text-muted-foreground hover:text-destructive"
-                    >
-                      <Trash2 data-icon="inline-start" />
-                    </button>
-                  </form>
-                )}
-              </div>
-              <h3 className="mt-5 text-xl font-bold leading-snug">{quiz.title}</h3>
-              <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
-                {quiz.description}
-              </p>
-              <div className="mt-6 flex items-center gap-4 text-xs text-muted-foreground">
-                <span>{quiz.topic}</span>
-                <span className="flex items-center gap-1">
-                  <Clock3 data-icon="inline-start" />
-                  {t("questionCount", { count: quiz.questionCount })}
-                </span>
-              </div>
-              <Button
-                className="mt-6 w-full"
-                variant="secondary"
-                nativeButton={false}
-                render={<Link href={`/quiz/${quiz.id}`} />}
-              >
-                {t("startQuiz")}
-                <ChevronRight data-icon="inline-end" />
-              </Button>
-            </article>
-          ))}
-        </section>
+        <QuizLibrary
+          quizzes={quizzes}
+          locale={locale}
+          currentUserId={session?.user?.id ?? null}
+        />
       </div>
     </main>
   );

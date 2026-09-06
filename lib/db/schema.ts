@@ -70,6 +70,8 @@ export const quizzes = pgTable("quizzes", {
   grade: text("grade"),
   description: text("description"),
   sourceNote: text("source_note"),
+  // nullable: legacy rows and the sample quiz have no importer
+  importedBy: uuid("imported_by").references(() => users.id, { onDelete: "set null" }),
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });

@@ -31,6 +31,7 @@ export async function listQuizzes() {
       grade: sampleQuiz.grade,
       description: sampleQuiz.description,
       sourceNote: sampleQuiz.sourceNote,
+      importedBy: null,
       createdAt: new Date(),
       deletedAt: null,
       questionCount: sampleQuiz.questions.length,
@@ -85,6 +86,7 @@ export async function importQuiz(locale: string, raw: string) {
           grade: quiz.grade,
           description: quiz.description,
           sourceNote: quiz.sourceNote,
+          importedBy: session.user.id,
         })
         .returning({ id: quizzes.id });
       await tx.insert(questions).values(
@@ -113,10 +115,15 @@ export async function importQuiz(locale: string, raw: string) {
 }
 
 export async function deleteQuiz(locale: string, id: string) {
+  const t = await getTranslations({ locale: resolveLocale(locale), namespace: "Validation" });
   if (id === "sample") {
-    const t = await getTranslations({ locale: resolveLocale(locale), namespace: "Validation" });
     return { ok: false, message: t("sampleCannotDelete") };
   }
+  const session = await auth();
+  if (!session?.user) return { ok: false, message: t("signInRequired") };
+  const [quiz] = await db.select().from(quizzes).where(eq(quizzes.id, id));
+  if (!quiz) return { ok: false, message: t("notOwnerCannotDelete") };
+  if (quiz.importedBy !== session.user.id) return { ok: false, message: t("notOwnerCannotDelete") };
   await db.update(quizzes).set({ deletedAt: new Date() }).where(eq(quizzes.id, id));
   revalidatePath("/[locale]", "layout");
   return { ok: true };

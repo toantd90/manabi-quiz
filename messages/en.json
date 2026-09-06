@@ -27,6 +27,9 @@
     "libraryLabel": "Quiz library",
     "libraryTitle": "Quizzes to try",
     "addFromJson": "Add from JSON",
+    "filterAll": "All quizzes",
+    "filterMine": "My quizzes",
+    "noMineQuizzes": "You haven't added any quizzes yet.",
     "deleteAria": "Delete {title}",
     "questionCount": "{count} questions",
     "startQuiz": "Start quiz"
@@ -112,6 +115,7 @@
     "unknownError": "Could not verify the quiz",
     "saveFailed": "Could not save. Please check your Neon connection.",
     "sampleCannotDelete": "The sample quiz cannot be deleted",
+    "notOwnerCannotDelete": "Only the person who added this quiz can delete it",
     "issueMessage": "{path}: {message}",
     "signInRequired": "Sign in with Google to add a quiz."
   },

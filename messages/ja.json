@@ -27,6 +27,9 @@
     "libraryLabel": "クイズライブラリ",
     "libraryTitle": "挑戦するクイズ",
     "addFromJson": "JSONから追加",
+    "filterAll": "すべてのクイズ",
+    "filterMine": "自分が追加したクイズ",
+    "noMineQuizzes": "まだクイズを追加していません。",
     "deleteAria": "{title}を削除",
     "questionCount": "{count}問",
     "startQuiz": "クイズを始める"
@@ -112,6 +115,7 @@
     "unknownError": "クイズを確認できませんでした",
     "saveFailed": "保存できませんでした。Neonの接続を確認してください。",
     "sampleCannotDelete": "サンプル問題は削除できません",
+    "notOwnerCannotDelete": "このクイズを追加した本人のみ削除できます",
     "issueMessage": "{path}：{message}",
     "signInRequired": "クイズを追加するにはGoogleでログインしてください。"
   },
