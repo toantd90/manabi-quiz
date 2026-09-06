@@ -16,10 +16,15 @@ function resolveLocale(locale: string) {
 export async function listQuizzes() {
   try {
     const rows = await db.select().from(quizzes).where(isNull(quizzes.deletedAt)).orderBy(desc(quizzes.createdAt))
-    console.log("Fetched quizzes: ", rows);
     if (rows.length) return rows.map((quiz) => ({ ...quiz, questionCount: 0 }))
-  } catch { /* preview can still render the sample */ }
+  } catch (error) { console.error('listQuizzes failed', error) /* preview can still render the sample */ }
   return [{ id: 'sample', title: sampleQuiz.title, subject: sampleQuiz.subject, topic: sampleQuiz.topic, grade: sampleQuiz.grade, description: sampleQuiz.description, sourceNote: sampleQuiz.sourceNote, createdAt: new Date(), deletedAt: null, questionCount: sampleQuiz.questions.length }]
+}
+
+export async function listAttempts() {
+  try {
+    return await db.select().from(attempts).orderBy(desc(attempts.completedAt))
+  } catch (error) { console.error('listAttempts failed', error); return [] }
 }
 
 export async function getQuiz(id: string) {
@@ -42,7 +47,7 @@ export async function importQuiz(locale: string, raw: string) {
     })
     revalidatePath('/')
     return { ok: true, errors: [] }
-  } catch { return { ok: false, errors: [t('saveFailed')] } }
+  } catch (error) { console.error('importQuiz failed', error); return { ok: false, errors: [t('saveFailed')] } }
 }
 
 export async function deleteQuiz(locale: string, id: string) {

@@ -65,6 +65,7 @@ messages/
 
 proxy.ts                 Locale detection and redirect proxy (middleware)
 global.d.ts              next-intl TypeScript augmentation
+drizzle.config.ts        Drizzle Kit config for schema push/generate/migrate
 ```
 
 ## Requirements
@@ -112,6 +113,14 @@ The required database tables are:
 - `attempt_answers`
 
 In the Vercel/v0 environment, the Neon integration provisions `DATABASE_URL` automatically and the schema is applied through the connected Neon tooling.
+
+For local development, push the schema to your Neon database with Drizzle Kit before running the app:
+
+```bash
+pnpm db:push
+```
+
+If quiz saves fail with a "relation does not exist" error, the schema has not been pushed to the database yet — run `pnpm db:push` again.
 
 ## Running Locally
 
@@ -248,6 +257,10 @@ Creates the shared PostgreSQL pool and Drizzle client using `DATABASE_URL`.
 ### `lib/db/schema.ts`
 
 Defines the Drizzle table schema and the built-in sample quiz.
+
+### `drizzle.config.ts`
+
+Drizzle Kit configuration used by `pnpm db:push`/`db:generate`/`db:migrate` to sync `lib/db/schema.ts` with the Neon database.
 
 ### `i18n/routing.ts`, `i18n/navigation.ts`, `i18n/request.ts`, `proxy.ts`
 
