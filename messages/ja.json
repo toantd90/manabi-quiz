@@ -97,6 +97,7 @@
     "yourAnswerAndCorrectAnswer": "あなたの答え：{selectedAnswer} / 正解：{correctAnswer}",
     "questionCounter": "{current} / {total}問",
     "timeLeft": "残り{time}",
+    "correctSoFar": "正解 {correct} / {total}",
     "correctFeedback": "正解です",
     "incorrectFeedback": "もう一度確認しましょう",
     "correctAnswerPrefix": "正解：{correctAnswer}",
@@ -113,7 +114,16 @@
     "reviewPrevious": "前へ",
     "reviewNext": "次へ",
     "reviewCompleted": "よくできました！すべての間違いを確認しました。",
-    "notSavedNotice": "ゲストとして利用しているため、この結果は保存されません。Googleでログインすると履歴を残せます。"
+    "notSavedNotice": "ゲストとして利用しているため、この結果は保存されません。Googleでログインすると履歴を残せます。",
+    "startQuestionCount": "{count}問",
+    "showAnswerSettingLabel": "答え合わせのタイミング（今回のみ）",
+    "showAnswerSettingDescription": "この設定は今回のクイズにのみ適用されます。今後のクイズの初期設定を変えたい場合は、ヘッダーの答え合わせ設定から変更してください。",
+    "showAnswerImmediatelyOption": "回答直後に表示",
+    "showAnswerAtEndOption": "最後にまとめて表示",
+    "startQuizButton": "クイズを始める",
+    "headerSettingAria": "答え合わせの初期設定",
+    "headerSettingLabel": "答え合わせの初期設定",
+    "headerSettingDescription": "新しく始めるクイズの初期設定です。クイズごとに今回だけの変更もできます。"
   },
   "Validation": {
     "required": "入力してください",

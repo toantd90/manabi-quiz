@@ -97,6 +97,7 @@
     "yourAnswerAndCorrectAnswer": "Câu trả lời của bạn: {selectedAnswer} / Đáp án đúng: {correctAnswer}",
     "questionCounter": "{current} / {total} câu",
     "timeLeft": "Còn lại {time}",
+    "correctSoFar": "Đúng {correct} / {total}",
     "correctFeedback": "Chính xác",
     "incorrectFeedback": "Hãy kiểm tra lại câu này",
     "correctAnswerPrefix": "Đáp án đúng: {correctAnswer}",
@@ -113,7 +114,16 @@
     "reviewPrevious": "Trước",
     "reviewNext": "Sau",
     "reviewCompleted": "Làm tốt lắm! Bạn đã xem lại tất cả các câu sai.",
-    "notSavedNotice": "Bạn đang dùng ở chế độ khách nên kết quả này sẽ không được lưu. Đăng nhập bằng Google để lưu lại lịch sử học tập."
+    "notSavedNotice": "Bạn đang dùng chế độ khách nên kết quả này chưa được lưu. Đăng nhập bằng Google để lưu lại lịch sử.",
+    "startQuestionCount": "{count} câu hỏi",
+    "showAnswerSettingLabel": "Thời điểm xem đáp án (chỉ lần này)",
+    "showAnswerSettingDescription": "Cài đặt này chỉ áp dụng cho lần làm bài này. Để đổi mặc định cho các bài sau, hãy dùng cài đặt xem đáp án ở thanh tiêu đề.",
+    "showAnswerImmediatelyOption": "Ngay sau khi chọn",
+    "showAnswerAtEndOption": "Chỉ khi kết thúc",
+    "startQuizButton": "Bắt đầu",
+    "headerSettingAria": "Mặc định xem đáp án",
+    "headerSettingLabel": "Mặc định xem đáp án",
+    "headerSettingDescription": "Áp dụng cho các bài quiz mới. Bạn vẫn có thể đổi riêng cho từng lần làm bài."
   },
   "Validation": {
     "required": "Vui lòng nhập giá trị",

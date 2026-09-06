@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { submitAttempt } from "@/app/actions/quiz";
 import { Button } from "@/components/ui/button";
 import { DisplaySettings } from "@/components/display-settings";
+import { AnswerFeedbackSetting } from "@/components/answer-feedback-setting";
+import { getStoredShowAnswerImmediately } from "@/lib/quiz-settings";
 import { Link } from "@/i18n/navigation";
 
 const SECONDS_PER_QUESTION = 60;
@@ -23,6 +25,7 @@ type Question = {
   correctAnswer: string;
   explanation: string;
   memoryTip?: string | null;
+  difficulty?: string | null;
   points: number;
 };
 type Quiz = {
@@ -31,6 +34,31 @@ type Quiz = {
   subject: string;
   questions: Question[];
 };
+
+// difficulty is free text authored in the source material's language; map the known
+// Basic/Standard/Challenge labels (en/ja/vi) to a tier color, and fall back to a neutral badge otherwise
+const DIFFICULTY_TIER_STYLES = [
+  "border-emerald-300 bg-emerald-100 text-emerald-900",
+  "border-amber-300 bg-amber-100 text-amber-900",
+  "border-rose-300 bg-rose-100 text-rose-900",
+] as const;
+const DIFFICULTY_TIER_LABELS: Record<string, number> = {
+  basic: 0,
+  standard: 1,
+  challenge: 2,
+  "基本": 0,
+  "標準": 1,
+  "発展": 2,
+  "cơ bản": 0,
+  "trung bình": 1,
+  "nâng cao": 2,
+};
+function difficultyBadgeClass(difficulty?: string | null) {
+  const tier = difficulty ? DIFFICULTY_TIER_LABELS[difficulty.trim().toLowerCase()] : undefined;
+  return tier !== undefined
+    ? DIFFICULTY_TIER_STYLES[tier]
+    : "border-border bg-secondary text-muted-foreground";
+}
 
 // switching language mid-quiz remounts this component; progress is kept in sessionStorage keyed by quiz id
 const storageKeyFor = (quizId: string) => `quiz-session-progress:${quizId}`;
@@ -45,6 +73,8 @@ type PersistedState = {
   reviewMode: boolean;
   reviewIndex: number;
   reviewedIds: string[];
+  started: boolean;
+  showAnswerImmediately: boolean;
 };
 
 export function QuizSession({ quiz }: { quiz: Quiz }) {
@@ -71,12 +101,26 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
   const [hydrated, setHydrated] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [started, setStarted] = useState(false);
+  // seeded from the user's saved header preference; can still be overridden for this attempt only
+  const [showAnswerImmediately, setShowAnswerImmediately] = useState(() =>
+    getStoredShowAnswerImmediately(),
+  );
   // guards against duplicate submitAttempt calls from rapid clicks or a race with the timeout auto-submit
   const submittedRef = useRef(false);
   const mistakes = useMemo(
     () => (result ? result.scored.filter((item) => !item.isCorrect) : []),
     [result],
   );
+  const questionById = useMemo(
+    () => new Map(questions.map((question) => [question.id, question])),
+    [questions],
+  );
+  // counts the current pick as soon as it's made, since feedback is revealed immediately on selection
+  const correctSoFar =
+    answers.filter((a) => questionById.get(a.questionId)?.correctAnswer === a.selectedAnswer)
+      .length + (selected !== null && selected === current.correctAnswer ? 1 : 0);
+  const answeredSoFar = answers.length + (selected !== null ? 1 : 0);
   const clearProgress = () => {
     try {
       sessionStorage.removeItem(storageKey);
@@ -101,6 +145,8 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           setReviewMode(saved.reviewMode);
           setReviewIndex(saved.reviewIndex);
           setReviewedIds(new Set(saved.reviewedIds));
+          setStarted(saved.started);
+          setShowAnswerImmediately(saved.showAnswerImmediately);
         }
       }
     } catch {
@@ -122,6 +168,8 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
       reviewMode,
       reviewIndex,
       reviewedIds: Array.from(reviewedIds),
+      started,
+      showAnswerImmediately,
     };
     try {
       sessionStorage.setItem(storageKey, JSON.stringify(payload));
@@ -140,6 +188,8 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
     reviewMode,
     reviewIndex,
     reviewedIds,
+    started,
+    showAnswerImmediately,
   ]);
 
   // marks the mistake currently shown in review mode as reviewed
@@ -151,13 +201,13 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
   }, [reviewMode, reviewIndex, mistakes, reviewedIds]);
 
   useEffect(() => {
-    if (result || timeLeft <= 0) return;
+    if (!started || result || timeLeft <= 0) return;
     const timer = setInterval(() => setTimeLeft((prev) => Math.max(0, prev - 1)), 1000);
     return () => clearInterval(timer);
-  }, [result, timeLeft]);
+  }, [started, result, timeLeft]);
 
   useEffect(() => {
-    if (result || timeLeft > 0 || submittedRef.current) return;
+    if (!started || result || timeLeft > 0 || submittedRef.current) return;
     submittedRef.current = true;
     const finalAnswers = selected
       ? [...answers, { questionId: current.id, selectedAnswer: selected }]
@@ -172,7 +222,59 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         submittedRef.current = false;
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeLeft, result]);
+  }, [started, timeLeft, result]);
+
+  if (!started)
+    return (
+      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-5 sm:py-10">
+        <div className="flex items-center justify-between gap-4">
+          <Link
+            href="/"
+            onClick={clearProgress}
+            className="flex items-center gap-2 text-sm text-muted-foreground"
+          >
+            <ArrowLeft data-icon="inline-start" />
+            {tNav("backToList")}
+          </Link>
+          <div className="flex items-center gap-2">
+            <AnswerFeedbackSetting />
+            <DisplaySettings />
+          </div>
+        </div>
+        <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-10">
+          <p className="text-sm font-semibold text-primary">{quiz.subject}</p>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">{quiz.title}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {t("startQuestionCount", { count: questions.length })}
+          </p>
+          <div className="mt-8">
+            <p className="font-semibold">{t("showAnswerSettingLabel")}</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("showAnswerSettingDescription")}
+            </p>
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => setShowAnswerImmediately(false)}
+                className={`rounded-2xl border p-3 text-left text-sm font-semibold transition ${!showAnswerImmediately ? "border-primary bg-primary/10" : ""}`}
+              >
+                {t("showAnswerAtEndOption")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowAnswerImmediately(true)}
+                className={`rounded-2xl border p-3 text-left text-sm font-semibold transition ${showAnswerImmediately ? "border-primary bg-primary/10" : ""}`}
+              >
+                {t("showAnswerImmediatelyOption")}
+              </button>
+            </div>
+          </div>
+          <Button className="mt-8 w-full" onClick={() => setStarted(true)}>
+            {t("startQuizButton")}
+          </Button>
+        </section>
+      </main>
+    );
 
   if (result && reviewMode) {
     const total = mistakes.length;
@@ -377,11 +479,20 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
           <ArrowLeft data-icon="inline-start" />
           {tNav("backToList")}
         </Link>
-        <DisplaySettings />
+        <div className="flex items-center gap-2">
+          <AnswerFeedbackSetting />
+          <DisplaySettings />
+        </div>
       </div>
       <div>
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
           <span className="font-semibold text-primary">{quiz.subject}</span>
+          {showAnswerImmediately && (
+            <span className="flex items-center gap-1.5 font-semibold text-muted-foreground">
+              <CheckCircle2 className="size-4" />
+              {t("correctSoFar", { correct: correctSoFar, total: answeredSoFar })}
+            </span>
+          )}
           <span
             className={`flex items-center gap-1.5 font-semibold ${timeLeft <= 30 ? "text-destructive" : "text-muted-foreground"}`}
           >
@@ -403,7 +514,16 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
         </div>
       </div>
       <section className="rounded-[2rem] border bg-card p-5 shadow-sm sm:p-10">
-        <p className="text-sm text-muted-foreground">{quiz.title}</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">{quiz.title}</p>
+          {current.difficulty && (
+            <span
+              className={`shrink-0 rounded-full border px-3 py-1 text-xs font-bold ${difficultyBadgeClass(current.difficulty)}`}
+            >
+              {current.difficulty}
+            </span>
+          )}
+        </div>
         <h1 className="mt-4 text-xl font-bold leading-relaxed sm:text-3xl">{current.question}</h1>
         <div className="mt-8 flex flex-col gap-3">
           {current.choices.map((choice, choiceIndex) => (
@@ -421,7 +541,7 @@ export function QuizSession({ quiz }: { quiz: Quiz }) {
             </button>
           ))}
         </div>
-        {selected && (
+        {selected && showAnswerImmediately && (
           <div
             className={`mt-6 rounded-2xl border p-5 ${selected === current.correctAnswer ? "bg-primary/10" : "bg-destructive/10"}`}
           >

@@ -97,6 +97,7 @@
     "yourAnswerAndCorrectAnswer": "Your answer: {selectedAnswer} / Correct answer: {correctAnswer}",
     "questionCounter": "{current} / {total} questions",
     "timeLeft": "{time} left",
+    "correctSoFar": "{correct} / {total} correct",
     "correctFeedback": "That's correct",
     "incorrectFeedback": "Let's double-check this one",
     "correctAnswerPrefix": "Correct answer: {correctAnswer}",
@@ -113,7 +114,16 @@
     "reviewPrevious": "Previous",
     "reviewNext": "Next",
     "reviewCompleted": "Great job! You've reviewed all your mistakes.",
-    "notSavedNotice": "You're browsing as a guest, so this result wasn't saved. Sign in with Google to keep your history."
+    "notSavedNotice": "You're browsing as a guest, so this result wasn't saved. Sign in with Google to keep your history.",
+    "startQuestionCount": "{count} questions",
+    "showAnswerSettingLabel": "Answer feedback (this quiz only)",
+    "showAnswerSettingDescription": "This only applies to this attempt. To change your saved default for future quizzes, use the answer feedback setting in the header.",
+    "showAnswerImmediatelyOption": "Right after each answer",
+    "showAnswerAtEndOption": "Only at the end",
+    "startQuizButton": "Start quiz",
+    "headerSettingAria": "Answer feedback default",
+    "headerSettingLabel": "Answer feedback default",
+    "headerSettingDescription": "Sets when new quizzes reveal each answer by default. Each quiz can still be changed just for that attempt."
   },
   "Validation": {
     "required": "Please enter a value",
