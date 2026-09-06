@@ -31,6 +31,8 @@ Parents can import quizzes as JSON, while children can take randomized quizzes, 
 - `pg`
 - Lucide React
 - next-intl
+- Oxlint (linting)
+- Oxfmt (formatting)
 
 ## Project Structure
 
@@ -152,6 +154,22 @@ Run the production server:
 
 ```bash
 pnpm start
+```
+
+## Linting and Formatting
+
+Lint the codebase with Oxlint:
+
+```bash
+pnpm lint
+pnpm lint:fix
+```
+
+Check or apply formatting with Oxfmt:
+
+```bash
+pnpm format:check
+pnpm format
 ```
 
 ## Quiz JSON Format
